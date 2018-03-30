@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 module.exports = {
   module: {
@@ -30,6 +31,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new ErrorOverlayPlugin(),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',

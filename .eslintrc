@@ -1,3 +1,55 @@
 {
-  "extends": ["airbnb", "prettier", "prettier/react"]
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "env": {
+    "browser": true,
+    "jest": true,
+    "node": true
+  },
+  "plugins": ["prettier"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "valid-jsdoc": 2,
+    "no-undef": 2,
+    "id-length": 0,
+    "no-return-assign": 0,
+    "arrow-body-style": 0,
+    "no-multi-spaces": 0,
+    "func-names": 0,
+    "comma-dangle": 0,
+    "no-use-before-define": [2, "nofunc"],
+    "react/no-string-refs": 1,
+    "react/jsx-no-literals": [2, { "noStrings": false }],
+    "import/no-unresolved": 2,
+    "import/named": 2,
+    "import/default": 2,
+    "prefer-destructuring": [2, { "object": true, "array": false }],
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "brace-style": 0,
+    "class-methods-use-this": 0,
+    "jsx-a11y/href-no-hash": 0,
+    "jsx-a11y/label-has-for": [
+      0,
+      { "components": ["Label"], "required": { "every": ["id"] } }
+    ],
+    "react/jsx-curly-brace-presence": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "jsx-a11y/no-noninteractive-tabindex": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "max-len": 0,
+    "no-multiple-empty-lines": 0,
+    "padded-blocks": 0,
+    "react/forbid-prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "react/no-find-dom-node": 0,
+    "react/prop-types": 0,
+    "react/require-default-props": 0
+  }
 }
