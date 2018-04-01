@@ -1,10 +1,10 @@
-# Simple react / graphQl / firebase start kit with a login form
+# Simple react / graphQl / firebase start kit with a login form ( in progress )
 
 ## Todo list
 
-* Create Firebase instance an set connection
 * Improve tests with Enzyme or an another framework
 * Add Flow
 * Add React router
 * Add Appolo
+* Create Firebase instance an set connection
 * Make an exemple page with some tested components, fake requests, ...

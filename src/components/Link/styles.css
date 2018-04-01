@@ -4,4 +4,8 @@
 
 .hovered {
   color: aqua;
+
+  .test {
+    font-size: 1.5rem;
+  }
 }

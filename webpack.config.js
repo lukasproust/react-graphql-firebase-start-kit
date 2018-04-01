@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
   module: {
@@ -31,7 +32,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new ErrorOverlayPlugin(),
+    new ProgressBarPlugin(),
+    new ErrorOverlayPlugin(), // Do not work now with webpack 4
+    new StyleLintPlugin(), // Do not work now with webpack 4
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
