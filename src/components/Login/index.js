@@ -5,8 +5,7 @@ import styles from './styles.css';
 
 const Login = () => (
   <div className={styles.container}>
-    {'test'}
-    <Link page={'http://google.fr'}>{'Link to google'}</Link>
+    <Link page={'http://google.fr'}>{'Link to google weffff'}</Link>
   </div>
 );
 

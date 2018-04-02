@@ -1,6 +1,6 @@
-# Simple react / graphQl / firebase start kit with a login form ( in progress )
+## Simple react / graphQl / firebase start kit with a login form ( in progress )
 
-## Todo list
+### Todo list
 
 * Improve tests with Enzyme or an another framework
 * Add Flow
