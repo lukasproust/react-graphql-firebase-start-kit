@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import styles from './styles.css';
 
@@ -23,11 +24,12 @@ class Link extends PureComponent {
 
   render() {
     const { className } = this.state;
-    const { page, children } = this.props;
+    const { page, children, muiTheme } = this.props;
 
     return (
       <a
         className={styles[className]}
+        style={{ color: muiTheme.palette.textColor }}
         href={page || '#'}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
@@ -43,4 +45,4 @@ Link.propTypes = {
   children: PropTypes.node,
 };
 
-export default Link;
+export default muiThemeable()(Link);
