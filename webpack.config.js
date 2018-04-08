@@ -3,10 +3,14 @@ const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   devServer: {
     hot: true,
+  },
+  resolve: {
+    modules: ['node_modules', path.resolve(__dirname, 'src/')],
   },
   module: {
     rules: [

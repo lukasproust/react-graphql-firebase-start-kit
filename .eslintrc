@@ -5,6 +5,11 @@
     "jest": true,
     "node": true
   },
+  "settings": {
+    "import/resolver": {
+      "webpack": "webpack.config.js"
+    }
+  },
   "plugins": ["prettier"],
   "parser": "babel-eslint",
   "parserOptions": {

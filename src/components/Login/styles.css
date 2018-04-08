@@ -15,3 +15,10 @@
   padding: 2rem;
   background-color: var(--color-white);
 }
+
+.link {
+  display: block;
+  text-align: center;
+  color: var(--color-grey-600);
+  font-size: 0.9rem;
+}
