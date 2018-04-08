@@ -31,6 +31,7 @@ module.exports = {
         loaders: [
           'style-loader?sourceMap',
           'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+          'postcss-loader',
         ],
       },
       {
@@ -39,7 +40,8 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 15000,
+              limit: 8192,
+              name: '[name].[hash:7].[ext]',
             },
           },
         ],
