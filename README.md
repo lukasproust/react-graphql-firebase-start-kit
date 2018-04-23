@@ -8,3 +8,4 @@
 * Add Appolo
 * Create Firebase instance an set connection
 * Make an exemple page with some tested components, fake requests, ...
+* Add component snapshots
