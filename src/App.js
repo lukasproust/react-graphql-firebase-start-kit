@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { IntlProvider } from 'react-intl';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -10,7 +11,10 @@ import {
 } from 'tools/language';
 import localStorage from 'tools/localStorage';
 
+import PrivateRoute from 'components/shared/PrivateRoute';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import NoMatch from './components/NoMatch';
 
 import css from './shared/styles/common.css';
 
@@ -56,7 +60,32 @@ class App extends Component {
       <div className={css.root}>
         <IntlProvider locale="en" messages={translations}>
           <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Login />
+            <Router>
+              <Fragment>
+                <Route path="/login" component={Login} />
+                <Switch>
+                  <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                </Switch>
+                <Route
+                  path="/"
+                  exact
+                  render={() => (
+                    <div>
+                      {'Public path'}
+                      <ul>
+                        <li>
+                          <Link to="/login">{'Login'}</Link>
+                        </li>
+                        <li>
+                          <Link to="/dashboard">{'Dashboard'}</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                />
+                <Route component={NoMatch} />
+              </Fragment>
+            </Router>
           </MuiThemeProvider>
         </IntlProvider>
       </div>

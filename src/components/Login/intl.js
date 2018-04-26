@@ -13,4 +13,8 @@ export default defineMessages({
     id: 'login.form.password.hint',
     defaultMessage: 'Password Field',
   },
+  login: {
+    id: 'login.form.button-login',
+    defaultMessage: 'Login',
+  },
 });
