@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { IntlProvider } from 'react-intl';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -64,26 +69,10 @@ class App extends Component {
               <Fragment>
                 <Route path="/login" component={Login} />
                 <Switch>
-                  <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                  <Redirect exact from="/" to="/dashboard" />
+                  <PrivateRoute path="/dashboard" component={Dashboard} />
+                  <Route component={NoMatch} />
                 </Switch>
-                <Route
-                  path="/"
-                  exact
-                  render={() => (
-                    <div>
-                      {'Public path'}
-                      <ul>
-                        <li>
-                          <Link to="/login">{'Login'}</Link>
-                        </li>
-                        <li>
-                          <Link to="/dashboard">{'Dashboard'}</Link>
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                />
-                <Route component={NoMatch} />
               </Fragment>
             </Router>
           </MuiThemeProvider>

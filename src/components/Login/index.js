@@ -21,13 +21,14 @@ class Login extends Component {
   };
 
   render() {
-    console.log('render login');
     const { redirectToReferrer } = this.state;
     const { intl: { formatMessage } } = this.context;
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { from } = this.props.location.state || {
+      from: { pathname: '/dashboard' },
+    };
 
-    // redirect to previous route
-    if (redirectToReferrer) {
+    // redirect to previous route or to default route
+    if (redirectToReferrer || fakeAuth.isAuthenticated) {
       return <Redirect to={from} />;
     }
 
@@ -47,10 +48,12 @@ class Login extends Component {
             floatingLabelFixed
           />
           <br />
+          <br />
           <RaisedButton
             label={formatMessage(messages.login)}
             onClick={this.login}
             primary
+            fullWidth
           />
         </div>
       </div>

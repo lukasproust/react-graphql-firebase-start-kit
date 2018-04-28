@@ -1,17 +1,22 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
+const history = require('connect-history-api-fallback');
+const convert = require('koa-connect');
+
+const { NODE_ENV = 'development' } = process.env;
+const isProd = NODE_ENV === 'production';
 
 module.exports = {
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-  },
+  mode: isProd ? 'production' : 'development',
+  devtool: isProd ? 'nosources-source-map' : 'cheap-module-source-map',
   resolve: {
     modules: ['node_modules', path.resolve(__dirname, 'src/')],
+  },
+  serve: {
+    add: app => {
+      app.use(convert(history()));
+    },
   },
   module: {
     rules: [
@@ -54,11 +59,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new ProgressBarPlugin(),
-    new ErrorOverlayPlugin(), // Do not work now with webpack 4
-    new StyleLintPlugin(), // Do not work now with webpack 4
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new ErrorOverlayPlugin(),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',

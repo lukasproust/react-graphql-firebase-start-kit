@@ -3,6 +3,7 @@ import { intlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import messages from './messages';
+import LogoutButton from '../LogoutButton';
 
 class Dashboard extends PureComponent {
   state = {};
@@ -16,7 +17,10 @@ class Dashboard extends PureComponent {
         {formatMessage(messages.welcome)}
         <ul>
           <li>
-            <Link to="/login">{'Login'}</Link>
+            <Link to="/">{'Test redirection /'}</Link>
+          </li>
+          <li>
+            <LogoutButton />
           </li>
         </ul>
       </div>
