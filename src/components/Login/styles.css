@@ -7,20 +7,18 @@
   position: relative;
 }
 
-.container {
+.card {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 2rem;
-  background-color: var(--color-white);
-  box-shadow: rgba(0, 0, 0, 0.12) 0 0.0625rem 0.375rem,
-    rgba(0, 0, 0, 0.12) 0 0.0625rem 0.25rem;
 }
 
-.link {
-  display: block;
-  text-align: center;
-  color: var(--color-grey-600);
-  font-size: 0.9rem;
+.form {
+  padding: 0 0 1em;
+}
+
+.button {
+  width: 100%;
 }

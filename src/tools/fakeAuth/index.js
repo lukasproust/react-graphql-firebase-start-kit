@@ -1,5 +1,6 @@
 const fakeAuth = {
-  isAuthenticated: false,
+  isAuthenticated: true,
+  // isAuthenticated: false,
   authenticate(callback) {
     this.isAuthenticated = true;
     setTimeout(callback, 100); // fake async

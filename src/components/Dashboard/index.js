@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { intlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 
+import Layout from 'components/shared/Layout';
+
 import messages from './messages';
-import LogoutButton from '../LogoutButton';
 
 class Dashboard extends PureComponent {
   state = {};
@@ -13,17 +14,16 @@ class Dashboard extends PureComponent {
     const { intl: { formatMessage } } = this.context;
 
     return (
-      <div>
-        {formatMessage(messages.welcome)}
-        <ul>
-          <li>
-            <Link to="/">{'Test redirection /'}</Link>
-          </li>
-          <li>
-            <LogoutButton />
-          </li>
-        </ul>
-      </div>
+      <Layout>
+        <Fragment>
+          {formatMessage(messages.welcome)}
+          <ul>
+            <li>
+              <Link to="/">{'Test redirection /'}</Link>
+            </li>
+          </ul>
+        </Fragment>
+      </Layout>
     );
   }
 }
