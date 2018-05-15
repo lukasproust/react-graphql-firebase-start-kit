@@ -16,10 +16,10 @@ import {
 } from 'tools/language';
 import localStorage from 'tools/localStorage';
 
-import PrivateRoute from 'components/shared/PrivateRoute';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import NoMatch from './components/NoMatch';
+import PrivateRoute from 'shared/components/PrivateRoute';
+import Login from 'shared/components/Login';
+import Dashboard from 'modules/dashboard/components/Root';
+import NoMatch from 'shared/components/NoMatch';
 
 import css from './shared/styles/common.css';
 
@@ -62,7 +62,7 @@ class App extends Component {
     }
 
     return (
-      <div className={css.root}>
+      <Fragment>
         <IntlProvider locale="en" messages={translations}>
           <MuiThemeProvider muiTheme={getMuiTheme()}>
             <Router>
@@ -77,7 +77,7 @@ class App extends Component {
             </Router>
           </MuiThemeProvider>
         </IntlProvider>
-      </div>
+      </Fragment>
     );
   }
 }

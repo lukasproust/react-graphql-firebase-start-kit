@@ -1,0 +1,13 @@
+.root {
+  color: blue;
+  display: 'flex';
+  align-items: 'flex-start';
+}
+
+.active {
+  color: red;
+}
+
+.icon {
+  padding-right: 1.2rem;
+}

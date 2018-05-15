@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import { intlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import Layout from 'components/shared/Layout';
+import Layout from './Layout';
 
 import messages from './messages';
 

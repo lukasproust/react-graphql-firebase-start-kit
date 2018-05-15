@@ -15,7 +15,12 @@ import css from './styles.css';
 
 class MyAppBar extends PureComponent {
   render() {
-    const { title, isMenuOpen, onMenuClick, history } = this.props;
+    const {
+      title,
+      sidebarVisibility,
+      setSidebarVisibility,
+      history,
+    } = this.props;
     const { intl: { formatMessage } } = this.context;
 
     return (
@@ -24,10 +29,10 @@ class MyAppBar extends PureComponent {
         onTitleClick={() => history.push('/')}
         iconElementLeft={
           <IconButton>
-            {isMenuOpen ? (
-              <CloseIcon onClick={onMenuClick} />
+            {sidebarVisibility ? (
+              <CloseIcon onClick={setSidebarVisibility} />
             ) : (
-              <MenuIcon onClick={onMenuClick} />
+              <MenuIcon onClick={setSidebarVisibility} />
             )}
           </IconButton>
         }

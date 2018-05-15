@@ -8,6 +8,7 @@
   "dependencies": {
     "autoprefixer": "^8.2.0",
     "babel-plugin-react-intl": "^2.4.0",
+    "classnames": "^2.2.5",
     "cssnano": "^3.10.0",
     "glob": "^7.1.2",
     "intl": "^1.2.5",
