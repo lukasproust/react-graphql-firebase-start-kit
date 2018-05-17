@@ -10,7 +10,7 @@ export default [
     name: messages.dashboard,
     icon: ViewCompactIcon,
     content: Dashboard,
-    path: '/dasboard',
+    path: '/dashboard',
   },
   {
     id: '2',
