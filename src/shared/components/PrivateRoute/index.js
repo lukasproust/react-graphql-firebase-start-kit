@@ -1,24 +1,29 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import fakeAuth from 'tools/fakeAuth';
+import UserContext from 'shared/components/UserContext';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      fakeAuth.isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: props.location },
-          }}
-        />
-      )
-    }
-  />
+  <UserContext.Consumer>
+    {({ currentUser }) => (
+      <Route
+        {...rest}
+        render={props => {
+          console.log(currentUser);
+          return currentUser ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: { from: props.location },
+              }}
+            />
+          );
+        }}
+      />
+    )}
+  </UserContext.Consumer>
 );
 
 export default PrivateRoute;

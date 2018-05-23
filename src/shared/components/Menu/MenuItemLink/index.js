@@ -14,10 +14,10 @@ const MenuItemLink = ({
   to,
   history,
 }) => {
+  // css.active
   return (
     <MenuItem
       className={classnames(css.root, className)}
-      activeClassName={css.active}
       onClick={() => {
         history.push(to);
         onClick();

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+// import PropTypes from 'prop-types';
 import { IntlProvider } from 'react-intl';
 import {
   BrowserRouter as Router,
@@ -16,12 +17,14 @@ import {
 } from 'tools/language';
 import localStorage from 'tools/localStorage';
 
+import UserContext from 'shared/components/UserContext';
 import PrivateRoute from 'shared/components/PrivateRoute';
 import Login from 'shared/components/Login';
 import Dashboard from 'modules/dashboard/components/Root';
 import NoMatch from 'shared/components/NoMatch';
 
-import css from './shared/styles/common.css';
+import css from './shared/styles/common.css'; // eslint-disable-line no-unused-vars
+import firebase from './tools/firebase';
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +57,21 @@ class App extends Component {
     this.setState({ translations });
   }
 
+  redirectUserOnDisconnect() {
+    console.log('redirect on disconnect');
+    firebase.auth().onAuthStateChanged(
+      user =>
+        !user && (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: this.props.location },
+            }}
+          />
+        ),
+    );
+  }
+
   render() {
     const { translations } = this.state;
 
@@ -61,20 +79,33 @@ class App extends Component {
       return null;
     }
 
+    // // Set firebase on context
+    // firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     console.log('User is Logged');
+    //   } else {
+    //     console.log('No user are logged');
+    //     // No user is signed in.
+    //   }
+    // });
+
     return (
       <Fragment>
         <IntlProvider locale="en" messages={translations}>
           <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Router>
-              <Fragment>
-                <Route path="/login" component={Login} />
-                <Switch>
-                  <Redirect exact from="/" to="/dashboard" />
-                  <PrivateRoute path="/dashboard" component={Dashboard} />
-                  <Route component={NoMatch} />
-                </Switch>
-              </Fragment>
-            </Router>
+            <UserContext.Provider value={firebase.auth()}>
+              <Router>
+                <Fragment>
+                  {this.redirectUserOnDisconnect()}
+                  <Route path="/login" component={Login} />
+                  <Switch>
+                    <Redirect exact from="/" to="/dashboard" />
+                    <PrivateRoute path="/dashboard" component={Dashboard} />
+                    <Route component={NoMatch} />
+                  </Switch>
+                </Fragment>
+              </Router>
+            </UserContext.Provider>
           </MuiThemeProvider>
         </IntlProvider>
       </Fragment>

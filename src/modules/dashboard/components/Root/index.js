@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import { intlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 
+import DashboardComponent from 'modules/dashboard/components/Dashboard';
 import Layout from './Layout';
 
 import messages from './messages';
@@ -11,7 +12,9 @@ class Dashboard extends PureComponent {
 
   render() {
     console.log('render dashboard');
-    const { intl: { formatMessage } } = this.context;
+    const {
+      intl: { formatMessage },
+    } = this.context;
 
     return (
       <Layout>
@@ -22,6 +25,7 @@ class Dashboard extends PureComponent {
               <Link to="/">{'Test redirection /'}</Link>
             </li>
           </ul>
+          <DashboardComponent />
         </Fragment>
       </Layout>
     );

@@ -16,5 +16,12 @@ module.exports = () => {
     },
   );
 
-  return { raw };
+  // Stringify all values so we can feed into Webpack DefinePlugin
+  const stringified = {
+    'process.env': Object.keys(raw).reduce((env, key) => {
+      return Object.assign({}, env, { [key]: JSON.stringify(raw[key]) });
+    }, {}),
+  };
+
+  return { raw, stringified };
 };
