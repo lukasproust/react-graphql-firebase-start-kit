@@ -58,7 +58,6 @@ class App extends Component {
   }
 
   redirectUserOnDisconnect() {
-    console.log('redirect on disconnect');
     firebase.auth().onAuthStateChanged(
       user =>
         !user && (
