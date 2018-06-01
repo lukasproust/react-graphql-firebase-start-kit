@@ -2,7 +2,7 @@ import React from 'react';
 import { intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import MenuItemLink from './MenuItemLink';
 import css from './styles.css';

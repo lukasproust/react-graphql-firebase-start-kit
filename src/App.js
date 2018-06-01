@@ -7,9 +7,6 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import {
   getStandardizedLocale,
   normalizeLocale,
@@ -91,21 +88,19 @@ class App extends Component {
     return (
       <Fragment>
         <IntlProvider locale="en" messages={translations}>
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <UserContext.Provider value={firebase.auth()}>
-              <Router>
-                <Fragment>
-                  {this.redirectUserOnDisconnect()}
-                  <Route path="/login" component={Login} />
-                  <Switch>
-                    <Redirect exact from="/" to="/dashboard" />
-                    <PrivateRoute path="/dashboard" component={Dashboard} />
-                    <Route component={NoMatch} />
-                  </Switch>
-                </Fragment>
-              </Router>
-            </UserContext.Provider>
-          </MuiThemeProvider>
+          <UserContext.Provider value={firebase.auth()}>
+            <Router>
+              <Fragment>
+                {this.redirectUserOnDisconnect()}
+                <Route path="/login" component={Login} />
+                <Switch>
+                  <Redirect exact from="/" to="/dashboard" />
+                  <PrivateRoute path="/dashboard" component={Dashboard} />
+                  <Route component={NoMatch} />
+                </Switch>
+              </Fragment>
+            </Router>
+          </UserContext.Provider>
         </IntlProvider>
       </Fragment>
     );

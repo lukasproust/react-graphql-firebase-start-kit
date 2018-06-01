@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import styles from './styles.css';
 
@@ -45,4 +44,4 @@ Link.propTypes = {
   children: PropTypes.node,
 };
 
-export default muiThemeable()(Link);
+export default Link;

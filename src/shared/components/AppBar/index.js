@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import { intlShape } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import FlatButton from 'material-ui/FlatButton';
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
 
 import fakeAuth from 'tools/fakeAuth';
 
@@ -21,7 +21,9 @@ class MyAppBar extends PureComponent {
       setSidebarVisibility,
       history,
     } = this.props;
-    const { intl: { formatMessage } } = this.context;
+    const {
+      intl: { formatMessage },
+    } = this.context;
 
     return (
       <AppBar
@@ -37,7 +39,7 @@ class MyAppBar extends PureComponent {
           </IconButton>
         }
         iconElementRight={
-          <FlatButton
+          <Button
             label={formatMessage(messages.logout)}
             onClick={() => fakeAuth.signout(() => history.push('/'))}
           />

@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import { intlShape } from 'react-intl';
 import { Redirect } from 'react-router-dom';
 
-import { Card, CardActions } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import CircularProgress from 'material-ui/CircularProgress';
-
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import UserContext from 'shared/components/UserContext';
 
 import messages from './intl';
@@ -21,6 +21,7 @@ class Login extends PureComponent {
   // TODO use formik && Yup
 
   login = () => {
+    console.log('login here');
     // setTimeout(() => {
     //   fakeAuth.authenticate(() => {
     //     this.setState({ redirectToReferrer: true, isLoading: false });
@@ -33,7 +34,8 @@ class Login extends PureComponent {
     const {
       intl: { formatMessage },
     } = this.context;
-    const { from } = this.props.location.state || {
+    const fromRoute = (this.props.location &&
+      this.props.location.state.from) || {
       from: { pathname: '/dashboard' },
     };
 
@@ -42,42 +44,41 @@ class Login extends PureComponent {
         {user => (
           <div className={css.background}>
             {/* Last fix here */}
-            {redirectToReferrer && user.currentUser && <Redirect to={from} />}
+            {redirectToReferrer &&
+              user.currentUser && <Redirect to={fromRoute} />}
             <Card className={css.card}>
               <form>
                 <div className={css.form}>
                   <div className={css.input}>
                     <TextField
-                      hintText={formatMessage(messages.emailHint)}
-                      floatingLabelText={formatMessage(messages.emailLabel)}
-                      floatingLabelFixed
+                      fullWidth
+                      label={formatMessage(messages.emailLabel)}
                     />
                   </div>
                 </div>
                 <div className={css.form}>
                   <div className={css.input}>
                     <TextField
-                      floatingLabelText={formatMessage(messages.passwordlHint)}
-                      hintText="&#8226;&#8226;&#8226;&#8226;&#8226;"
+                      fullWidth
+                      label={formatMessage(messages.passwordlHint)}
                       type="password"
-                      floatingLabelFixed
                     />
                   </div>
                 </div>
                 <CardActions>
-                  <RaisedButton
+                  <Button
+                    variant="raised"
                     onClick={this.login}
-                    label={formatMessage(messages.login)}
-                    icon={
-                      isLoading ? (
-                        <CircularProgress size={25} thickness={2} />
-                      ) : (
-                        ''
-                      )
-                    }
-                    primary
+                    color="primary"
                     fullWidth
-                  />
+                  >
+                    {formatMessage(messages.login)}
+                    {isLoading ? (
+                      <CircularProgress size={25} thickness={2} />
+                    ) : (
+                      ''
+                    )}
+                  </Button>
                 </CardActions>
               </form>
             </Card>

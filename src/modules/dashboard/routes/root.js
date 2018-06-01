@@ -1,7 +1,7 @@
-import ViewCompactIcon from 'material-ui/svg-icons/image/view-compact';
+import ViewCompactIcon from '@material-ui/icons/ViewCompact';
+
 import Dashboard from 'modules/dashboard/components/Dashboard';
 import Users from 'modules/dashboard/components/Users';
-
 import messages from './intl';
 
 export default [
