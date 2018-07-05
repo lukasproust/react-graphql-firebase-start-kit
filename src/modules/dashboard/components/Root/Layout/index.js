@@ -16,12 +16,15 @@ class Layout extends PureComponent {
   };
 
   setSidebarVisibility = () => {
-    this.setState({ sidebarVisibility: !this.state.sidebarVisibility });
+    const { sidebarVisibility } = this.state;
+    this.setState({ sidebarVisibility: !sidebarVisibility });
   };
 
   render() {
     const { children } = this.props;
-    const { intl: { formatMessage } } = this.context;
+    const {
+      intl: { formatMessage },
+    } = this.context;
     const { sidebarVisibility } = this.state;
 
     return (

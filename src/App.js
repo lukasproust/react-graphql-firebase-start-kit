@@ -55,13 +55,15 @@ class App extends Component {
   }
 
   redirectUserOnDisconnect() {
+    const { location } = this.props;
+
     firebase.auth().onAuthStateChanged(
       user =>
         !user && (
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: this.props.location },
+              state: { from: location },
             }}
           />
         ),

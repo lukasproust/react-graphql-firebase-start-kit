@@ -40,12 +40,12 @@ class Login extends PureComponent {
   };
 
   render() {
-    const { redirectToReferrer, isLoading } = this.state;
+    const { redirectToReferrer, isLoading, email, password } = this.state;
     const {
       intl: { formatMessage },
     } = this.context;
-    const fromRoute = (this.props.location &&
-      this.props.location.state.from) || {
+    const { location } = this.props;
+    const fromRoute = (location && location.state.from) || {
       from: { pathname: '/dashboard' },
     };
 
@@ -58,11 +58,7 @@ class Login extends PureComponent {
               user.currentUser && <Redirect to={fromRoute} />}
             <Card className={css.card}>
               <form>
-                <FormControl
-                  aria-describedby="email login"
-                  margin="dense"
-                  fullWidth
-                >
+                <FormControl margin="dense" fullWidth>
                   <Grid container spacing={8} alignItems="flex-end">
                     <Grid item xs={2}>
                       <AccountCircle />
@@ -71,18 +67,14 @@ class Login extends PureComponent {
                       <TextField
                         id="email"
                         label={formatMessage(messages.emailLabel)}
-                        value={this.state.email}
+                        value={email}
                         onChange={e => this.setState({ email: e.target.value })}
                         fullWidth
                       />
                     </Grid>
                   </Grid>
                 </FormControl>
-                <FormControl
-                  aria-describedby="password login"
-                  margin="dense"
-                  fullWidth
-                >
+                <FormControl margin="dense" fullWidth>
                   <Grid container fullWidth spacing={8} alignItems="flex-end">
                     <Grid item xs={2}>
                       <HttpsIcon />
@@ -90,7 +82,7 @@ class Login extends PureComponent {
                     <Grid item xs={10}>
                       <TextField
                         label={formatMessage(messages.passwordlHint)}
-                        value={this.state.password}
+                        value={password}
                         type="password"
                         onChange={e =>
                           this.setState({ password: e.target.value })
