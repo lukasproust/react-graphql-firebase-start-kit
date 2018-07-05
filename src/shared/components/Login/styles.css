@@ -24,6 +24,11 @@
   padding: 0 0 1em;
 }
 
+.login {
+  padding: 8px 0;
+  margin-top: 1rem;
+}
+
 .button {
   width: 100%;
 }

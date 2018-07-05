@@ -101,7 +101,7 @@ class Login extends PureComponent {
                   </Grid>
                 </FormControl>
 
-                <CardActions>
+                <CardActions className={css.login}>
                   <Button
                     variant="raised"
                     onClick={() => this.login(user)}
