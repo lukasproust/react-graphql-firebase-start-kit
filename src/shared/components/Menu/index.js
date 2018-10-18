@@ -1,41 +1,41 @@
-import React from 'react';
-import { intlShape } from 'react-intl';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import MenuIcon from '@material-ui/icons/Menu';
+import React from "react";
+import { intlShape } from "react-intl";
+import PropTypes from "prop-types";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { withStyles } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
 
-import MenuItemLink from './MenuItemLink';
-import css from './styles.css';
+import styles from "./styles";
 
-const Menu = (
-  { className, onMenuClick, items },
-  { intl: { formatMessage } },
-) => (
-  <div className={classnames(css.main, className)}>
+const Menu = ({ classes, items, history }, { intl: { formatMessage } }) => (
+  <MenuList>
     {items.map(item => (
-      <MenuItemLink
-        key={item.id}
-        to={item.path}
-        primaryText={formatMessage(item.name)}
-        leftIcon={item.icon ? <item.icon /> : <MenuIcon />} // Menu icon is default icon
-        onClick={onMenuClick}
-      />
+      <MenuItem key={item.id}>
+        <ListItemIcon
+          className={classes.icon}
+          onClick={() => history.push(item.path)}
+        >
+          {item.icon ? <item.icon /> : <MenuIcon />}
+        </ListItemIcon>
+        <ListItemText
+          classes={{ primary: classes.primary }}
+          inset
+          primary={formatMessage(item.name)}
+        />
+      </MenuItem>
     ))}
-  </div>
+  </MenuList>
 );
 
 Menu.propTypes = {
-  className: PropTypes.string,
-  onMenuClick: PropTypes.func,
-  items: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired
 };
 
 Menu.contextTypes = {
-  intl: intlShape.isRequired,
+  intl: intlShape.isRequired
 };
 
-Menu.defaultProps = {
-  onMenuClick: () => null,
-};
-
-export default Menu;
+export default withStyles(styles)(Menu);
