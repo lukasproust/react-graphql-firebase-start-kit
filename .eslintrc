@@ -13,11 +13,10 @@
   "plugins": ["prettier"],
   "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
-    }
+    "ecmaVersion": 6
   },
   "rules": {
+    "import/prefer-default-export": 0,
     "valid-jsdoc": 2,
     "no-undef": 2,
     "id-length": 0,
