@@ -1,13 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
-import UserContext from 'shared/components/UserContext';
+import UserContext from "shared/components/UserContext";
 
 const Dashboard = () => (
   <UserContext.Consumer>
     {user => (
       <Fragment>
-        {console.log('user connected on dashboard', user, user.currentUser)}
-        {'content dashboard'}
+        {`content dashboard ${user.currentUser && user.currentUser.email}`}
+        <button type="button" onClick={() => user.signOut()}>
+          {"signout"}
+        </button>
       </Fragment>
     )}
   </UserContext.Consumer>
