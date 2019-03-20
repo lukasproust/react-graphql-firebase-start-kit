@@ -1,4 +1,4 @@
-## Simple react / graphQl / firebase start kit with a login form ( in progress )
+## Simple React.JS starter kit with firebase Auth / Apollo and GraphQl / ( stil in progress )
 
 ### Todo list
 
