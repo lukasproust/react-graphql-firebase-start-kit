@@ -6,10 +6,7 @@ const Dashboard = () => (
   <UserContext.Consumer>
     {user => (
       <Fragment>
-        {`content dashboard ${user.currentUser && user.currentUser.email}`}
-        <button type="button" onClick={() => user.signOut()}>
-          {"signout"}
-        </button>
+        {`User signed ${user.currentUser && user.currentUser.email}`}
       </Fragment>
     )}
   </UserContext.Consumer>

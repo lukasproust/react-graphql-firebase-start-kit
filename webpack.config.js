@@ -2,9 +2,6 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
-const history = require("connect-history-api-fallback");
-const convert = require("koa-connect");
-const webpackServeWaitpage = require("webpack-serve-waitpage");
 
 const getClientEnvironment = require("./src/config/env");
 
@@ -14,20 +11,18 @@ const isProd = NODE_ENV === "production";
 const srcDir = path.resolve(__dirname, "src/");
 
 module.exports = {
+  entry: {
+    app: "./src/index.js"
+  },
   mode: isProd ? "production" : "development",
   devtool: isProd ? "nosources-source-map" : "cheap-module-source-map",
   resolve: {
     modules: ["node_modules", srcDir]
   },
-  serve: {
-    add: (app, middleware, options) => {
-      app.use(
-        webpackServeWaitpage(options, {
-          title: "Building — React GraphQl Firebase start kit"
-        })
-      );
-      app.use(convert(history()));
-    }
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    noInfo: true
   },
   module: {
     rules: [

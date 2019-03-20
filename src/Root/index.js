@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense, Fragment } from "react";
 import { IntlProvider } from "react-intl";
 import {
   BrowserRouter as Router,
@@ -24,7 +24,6 @@ import theme from "config/theme";
 import Loader from "./Loader";
 
 const Login = lazy(() => import("shared/components/Login"));
-// TODO make a loader
 
 const App = () => {
   const [translations, setTranslations] = useState();
@@ -55,24 +54,27 @@ const App = () => {
     }
   });
 
-  if (!translations || !authReady) return null;
-
   return (
     <MuiThemeProvider theme={theme}>
-      <IntlProvider locale="en" messages={translations}>
-        <UserContext.Provider value={user}>
-          <Router>
-            <Suspense fallback={<Loader />}>
-              <Switch>
-                <Redirect exact from="/" to="/login" />
-                <Route path="/login" component={Login} />
-                <PrivateRoutes />
-                <Route component={NoMatch404} />
-              </Switch>
-            </Suspense>
-          </Router>
-        </UserContext.Provider>
-      </IntlProvider>
+      <Fragment>
+        {!translations || (!authReady && <Loader />)}
+        {translations && authReady && (
+          <IntlProvider locale="en" messages={translations}>
+            <UserContext.Provider value={user}>
+              <Router>
+                <Suspense fallback={<Loader />}>
+                  <Switch>
+                    <Redirect exact from="/" to="/login" />
+                    <Route path="/login" component={Login} />
+                    <PrivateRoutes />
+                    <Route component={NoMatch404} />
+                  </Switch>
+                </Suspense>
+              </Router>
+            </UserContext.Provider>
+          </IntlProvider>
+        )}
+      </Fragment>
     </MuiThemeProvider>
   );
 };
