@@ -2,10 +2,6 @@
 
 ### Todo list
 
-* Improve tests with Enzyme or an another framework
-* Add Flow
-* Add React router
-* Add Appolo
-* Create Firebase instance an set connection
-* Make an exemple page with some tested components, fake requests, ...
+* Add some tests
+* Add Appolo and GraphQl with firebase model
 * Add component snapshots
