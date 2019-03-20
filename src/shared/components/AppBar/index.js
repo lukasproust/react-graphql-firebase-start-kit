@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState, memo, useContext } from "react";
 import { intlShape } from "react-intl";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -19,145 +19,78 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
-import fakeAuth from "tools/fakeAuth";
+import UserContext from "shared/components/UserContext";
 
 import globalMessages from "config/intl";
 import messages from "./intl";
 import styles from "./styles";
 
-class AppBar extends PureComponent {
-  state = {
-    anchorEl: undefined,
-    mobileMoreAnchorEl: undefined
+const AppBar = (
+  { history, setSidebarVisibility, classes },
+  { intl: { formatMessage } }
+) => {
+  const [anchorEl, setAnchorEl] = useState();
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState();
+  const user = useContext(UserContext);
+
+  const handleProfileMenuOpen = event => setAnchorEl(event.currentTarget);
+
+  const handleMobileMenuClose = () => setMobileMoreAnchorEl(null);
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
   };
 
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  const handleMobileMenuOpen = event =>
+    setMobileMoreAnchorEl(event.currentTarget);
+
+  const handleDisconnect = () => {
+    if (user) {
+      user.signOut();
+      history.push("/");
+    }
   };
 
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
-  };
+  const handleGoHome = () => history.push("/");
 
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
-
-  handleDisconnect = () => {
-    const { history } = this.props;
-    fakeAuth.signout(() => history.push("/"));
-  };
-
-  handleGoHome = () => {
-    const { history } = this.props;
-    history.push("/");
-  };
-
-  render() {
-    const {
-      /* sidebarVisibility, */
-      setSidebarVisibility,
-      classes
-    } = this.props;
-    const {
-      intl: { formatMessage }
-    } = this.context;
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    return (
-      <div className={classes.root}>
-        <AppBarMaterial position="static">
-          <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              onClick={() => setSidebarVisibility}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              className={classes.title}
-              variant="h6"
-              color="inherit"
-              noWrap
-              onClick={this.handleGoHome}
-            >
-              {formatMessage(globalMessages.appName)}
-            </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder={formatMessage(messages.search)}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
+  return (
+    <div className={classes.root}>
+      <AppBarMaterial position="static">
+        <Toolbar>
+          <IconButton
+            className={classes.menuButton}
+            color="inherit"
+            onClick={() => setSidebarVisibility}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            className={classes.title}
+            variant="h6"
+            color="inherit"
+            noWrap
+            onClick={handleGoHome}
+          >
+            {formatMessage(globalMessages.appName)}
+          </Typography>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
             </div>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge
-                  className={classes.margin}
-                  badgeContent={4}
-                  color="secondary"
-                >
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton color="inherit">
-                <Badge
-                  className={classes.margin}
-                  badgeContent={17}
-                  color="secondary"
-                >
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton onClick={this.handleProfileMenuOpen} color="inherit">
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBarMaterial>
-        {/* RIGHT MENU */}
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
-          open={isMenuOpen}
-          onClose={this.handleMenuClose}
-        >
-          <MenuItem onClick={this.handleClose}>
-            {formatMessage(messages.profile)}
-          </MenuItem>
-          <MenuItem onClick={this.handleDisconnect}>
-            {formatMessage(messages.logout)}
-          </MenuItem>
-        </Menu>
-        {/* LEFT MENU */}
-        <Menu
-          anchorEl={mobileMoreAnchorEl}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
-          open={isMobileMenuOpen}
-          onClose={this.handleMobileMenuClose}
-        >
-          <MenuItem>
+            <InputBase
+              placeholder={formatMessage(messages.search)}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput
+              }}
+            />
+          </div>
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
             <IconButton color="inherit">
               <Badge
                 className={classes.margin}
@@ -167,31 +100,83 @@ class AppBar extends PureComponent {
                 <MailIcon />
               </Badge>
             </IconButton>
-            <p>{formatMessage(messages.messages)}</p>
-          </MenuItem>
-          <MenuItem>
             <IconButton color="inherit">
               <Badge
                 className={classes.margin}
-                badgeContent={11}
+                badgeContent={17}
                 color="secondary"
               >
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <p>{formatMessage(messages.notifications)}</p>
-          </MenuItem>
-          <MenuItem onClick={this.handleProfileMenuOpen}>
-            <IconButton color="inherit">
+            <IconButton onClick={handleProfileMenuOpen} color="inherit">
               <AccountCircle />
             </IconButton>
-            <p>{formatMessage(messages.profile)}</p>
-          </MenuItem>
-        </Menu>{" "}
-      </div>
-    );
-  }
-}
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton onClick={handleMobileMenuOpen} color="inherit">
+              <MoreIcon />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBarMaterial>
+      {/* RIGHT MENU */}
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={() => {}}>
+          {formatMessage(messages.profile)}
+        </MenuItem>
+        <MenuItem onClick={handleDisconnect}>
+          {formatMessage(messages.logout)}
+        </MenuItem>
+      </Menu>
+      {/* LEFT MENU */}
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMobileMenuOpen}
+        onClose={handleMobileMenuClose}
+      >
+        <MenuItem>
+          <IconButton color="inherit">
+            <Badge
+              className={classes.margin}
+              badgeContent={4}
+              color="secondary"
+            >
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <p>{formatMessage(messages.messages)}</p>
+        </MenuItem>
+        <MenuItem>
+          <IconButton color="inherit">
+            <Badge
+              className={classes.margin}
+              badgeContent={11}
+              color="secondary"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>{formatMessage(messages.notifications)}</p>
+        </MenuItem>
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>{formatMessage(messages.profile)}</p>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};
 
 AppBar.contextTypes = {
   intl: intlShape.isRequired
@@ -201,4 +186,4 @@ AppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(styles)(AppBar));
+export default memo(withRouter(withStyles(styles)(AppBar)));

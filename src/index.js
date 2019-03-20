@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import intlPolyfill from 'tools/polyfills/intl';
-import App from './App';
+import intlPolyfill from "tools/polyfills/intl";
+import App from "./Root";
 
 const render = AppComponent => {
   const app = <AppComponent />;
-  ReactDOM.render(app, document.getElementById('app'));
+  ReactDOM.render(app, document.getElementById("app"));
 };
 
 // check/get polyfills

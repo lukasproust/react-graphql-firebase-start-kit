@@ -1,7 +1,7 @@
 import React from "react";
-import { firebaseAuth } from "tools/firebase";
+// import firebase from "tools/firebase";
 
-export default React.createContext(firebaseAuth);
+export default React.createContext();
 // createUserWithEmailAndPassword,
 // signInWithEmailAndPassword: firebase.auth().signInWithEmailAndPassword,
 // signOut: firebase.auth().signOut,

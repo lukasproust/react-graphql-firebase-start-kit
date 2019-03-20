@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import { intlShape } from "react-intl";
 import { Redirect } from "react-router-dom";
 
@@ -15,144 +15,123 @@ import Typography from "@material-ui/core/Typography";
 
 import localstorage from "tools/localStorage";
 import UserContext from "shared/components/UserContext";
+import useFormInput from "shared/hooks/useFormInput";
 
 import messages from "./intl";
 import css from "./styles.css";
 
-class Login extends PureComponent {
-  state = {
-    redirectToReferrer: false,
-    loading: false,
-    email: "",
-    password: "",
-    errorMessage: undefined
+const Login = ({ location, history }, { intl: { formatMessage } }) => {
+  const user = useContext(UserContext);
+  const email = useFormInput("");
+  const password = useFormInput("");
+  const [errorMessage, setErrorMessage] = useState();
+  const [loading, setLoading] = useState();
+  const [redirectToReferrer] = useState();
+
+  const fromRoute = (location.state && location.state.from) || {
+    from: { pathname: "/dashboard" }
   };
 
-  login = user => {
-    const { email, password } = this.state;
-    const { history } = this.props;
-
-    this.setState({ loading: true }, () => {
-      user
-        .signInWithEmailAndPassword(email, password)
-        .then(response => {
-          console.log(response);
-          localstorage.setItem("sessionId", response.idToken);
-          history.push({ pathname: "/dashboard" });
-        })
-        .catch(error => {
-          this.setState({
-            errorMessage: error.message, // TODO: add my own traduction here
-            loading: false
-          });
-        });
-    });
+  const login = () => {
+    setLoading(true);
+    user
+      .signInWithEmailAndPassword(email.value, password.value)
+      .then(response => {
+        localstorage.setItem("sessionId", response.idToken);
+        history.push({ pathname: "/dashboard" });
+      })
+      .catch(error => {
+        setErrorMessage(error.message);
+        setLoading(false);
+      });
   };
 
-  render() {
-    const {
-      intl: { formatMessage }
-    } = this.context;
-    const {
-      redirectToReferrer,
-      loading,
-      email,
-      password,
-      errorMessage
-    } = this.state;
-    const { location } = this.props;
-    const fromRoute = (location.state && location.state.from) || {
-      from: { pathname: "/dashboard" }
-    };
-
-    return (
-      <UserContext.Consumer>
-        {user => (
-          <div className={css.background}>
-            {/* Last fix here */}
-            {redirectToReferrer && user.currentUser && (
-              <Redirect to={fromRoute} />
-            )}
-            <Card className={css.card}>
-              <form>
-                <FormControl margin="dense" fullWidth>
-                  <Grid container spacing={8} alignItems="flex-end">
-                    <Grid item xs={2}>
-                      <AccountCircle color="primary" />
-                    </Grid>
-                    <Grid item xs={10}>
-                      <TextField
-                        id="email"
-                        label={formatMessage(messages.emailLabel)}
-                        value={email}
-                        onChange={e => this.setState({ email: e.target.value })}
-                        fullWidth
-                      />
-                    </Grid>
-                  </Grid>
-                </FormControl>
-                <FormControl margin="dense" fullWidth>
-                  <Grid
-                    container
-                    size="fullWidth"
-                    spacing={8}
-                    alignItems="flex-end"
-                  >
-                    <Grid item xs={2}>
-                      <HttpsIcon color="primary" />
-                    </Grid>
-                    <Grid item xs={10}>
-                      <TextField
-                        label={formatMessage(messages.passwordlHint)}
-                        value={password}
-                        type="password"
-                        onChange={e =>
-                          this.setState({ password: e.target.value })
-                        }
-                        fullWidth
-                      />
-                    </Grid>
-                  </Grid>
-                </FormControl>
-                {errorMessage && (
-                  <Typography
-                    classes={{ root: css.loginErrorMessage }}
-                    component="p"
-                    variant="body2"
-                    color="error"
-                    align="center"
-                  >
-                    {errorMessage}
-                  </Typography>
-                )}
-                <CardActions className={css.login}>
-                  <Button
-                    variant="contained"
-                    onClick={() => this.login(user)}
-                    color="primary"
-                    fullWidth
-                  >
-                    {formatMessage(messages.login)}
-                    {loading ? (
-                      <CircularProgress
-                        classes={{ root: css.loader }}
-                        color="inherit"
-                        size={15}
-                        thickness={5}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </Button>
-                </CardActions>
-              </form>
-            </Card>
-          </div>
+  return (
+    <div className={css.background}>
+      <Fragment>
+        {user && user.currentUser && (
+          <Redirect exact from="/login" to="/dashboard" />
         )}
-      </UserContext.Consumer>
-    );
-  }
-}
+        {!user ||
+          (!user.currentUser && location.pathname !== "/login" && (
+            <Redirect
+              to={{
+                pathname: "/login", //  TODO add segment
+                state: { from: location }
+              }}
+            />
+          ))}
+        {redirectToReferrer && user.currentUser && <Redirect to={fromRoute} />}
+      </Fragment>
+      <Card className={css.card}>
+        <form>
+          <FormControl margin="dense" fullWidth>
+            <Grid container spacing={8} alignItems="flex-end">
+              <Grid item xs={2}>
+                <AccountCircle color="primary" />
+              </Grid>
+              <Grid item xs={10}>
+                <TextField
+                  {...email} // value, onChange
+                  id="email"
+                  label={formatMessage(messages.emailLabel)}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+          </FormControl>
+          <FormControl margin="dense" fullWidth>
+            <Grid container size="fullWidth" spacing={8} alignItems="flex-end">
+              <Grid item xs={2}>
+                <HttpsIcon color="primary" />
+              </Grid>
+              <Grid item xs={10}>
+                <TextField
+                  {...password}
+                  id="password"
+                  type="password"
+                  label={formatMessage(messages.passwordlHint)}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+          </FormControl>
+          {errorMessage && (
+            <Typography
+              classes={{ root: css.loginErrorMessage }}
+              component="p"
+              variant="body2"
+              color="error"
+              align="center"
+            >
+              {errorMessage}
+            </Typography>
+          )}
+          <CardActions className={css.login}>
+            <Button
+              variant="contained"
+              onClick={login}
+              color="primary"
+              fullWidth
+            >
+              {formatMessage(messages.login)}
+              {loading ? (
+                <CircularProgress
+                  classes={{ root: css.loader }}
+                  color="inherit"
+                  size={15}
+                  thickness={5}
+                />
+              ) : (
+                ""
+              )}
+            </Button>
+          </CardActions>
+        </form>
+      </Card>
+    </div>
+  );
+};
 
 Login.defaultProps = {
   location: {}
