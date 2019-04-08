@@ -1,11 +1,5 @@
-import React, { useState, useEffect, lazy, Suspense, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { IntlProvider } from "react-intl";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Switch,
-  Route
-} from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import {
@@ -17,13 +11,12 @@ import localStorage from "tools/localStorage";
 import firebase from "tools/firebase";
 
 import UserContext from "shared/components/UserContext";
-import PrivateRoutes from "routes/PrivateRoutes";
-import NoMatch404 from "shared/components/NoMatch404";
+
+import Loader from "shared/components/Loader";
+
 import css from "shared/styles/common.css"; // eslint-disable-line no-unused-vars
 import theme from "config/theme";
-import Loader from "./Loader";
-
-const Login = lazy(() => import("shared/components/Login"));
+import Routes from "./Routes";
 
 const App = () => {
   const [translations, setTranslations] = useState();
@@ -61,16 +54,7 @@ const App = () => {
         {translations && authReady && (
           <IntlProvider locale="en" messages={translations}>
             <UserContext.Provider value={user}>
-              <Router>
-                <Suspense fallback={<Loader />}>
-                  <Switch>
-                    <Redirect exact from="/" to="/login" />
-                    <Route path="/login" component={Login} />
-                    <PrivateRoutes />
-                    <Route component={NoMatch404} />
-                  </Switch>
-                </Suspense>
-              </Router>
+              <Routes />
             </UserContext.Provider>
           </IntlProvider>
         )}

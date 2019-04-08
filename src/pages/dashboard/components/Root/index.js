@@ -2,7 +2,7 @@ import React, { memo, Fragment } from "react";
 import { intlShape } from "react-intl";
 import { Link } from "react-router-dom";
 
-import DashboardComponent from "modules/dashboard/components/Dashboard";
+import Users from "modules/dashboard/components/Dashboard";
 import Layout from "./Layout";
 
 import messages from "./messages";
@@ -10,13 +10,7 @@ import messages from "./messages";
 const Dashboard = (_, { intl: { formatMessage } }) => (
   <Layout>
     <Fragment>
-      {formatMessage(messages.welcome)}
-      <ul>
-        <li>
-          <Link to="/">{"Test redirection to /"}</Link>
-        </li>
-      </ul>
-      <DashboardComponent />
+      <Users />
     </Fragment>
   </Layout>
 );

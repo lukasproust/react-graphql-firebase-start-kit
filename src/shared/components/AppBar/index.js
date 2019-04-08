@@ -47,8 +47,7 @@ const AppBar = (
 
   const handleDisconnect = () => {
     if (user) {
-      user.signOut();
-      history.push("/");
+      user.signOut().then(() => history.push("/"));
     }
   };
 
@@ -91,24 +90,6 @@ const AppBar = (
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <Badge
-                className={classes.margin}
-                badgeContent={4}
-                color="secondary"
-              >
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton color="inherit">
-              <Badge
-                className={classes.margin}
-                badgeContent={17}
-                color="secondary"
-              >
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton onClick={handleProfileMenuOpen} color="inherit">
               <AccountCircle />
             </IconButton>
