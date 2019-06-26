@@ -1,26 +1,28 @@
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = "development";
 
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const babel = require('babel-core'); // eslint-disable-line import/no-extraneous-dependencies
-const chalk = require('chalk'); // eslint-disable-line import/no-extraneous-dependencies
-const config = require('../config/env')().raw;
+/* eslint-disable @typescript-eslint/no-var-requires */
+const fs = require("fs");
+const glob = require("glob");
+const path = require("path");
+const babel = require("babel-core");
+const chalk = require("chalk");
+/* eslint-enable @typescript-eslint/no-var-requires */
 
-const LOCALES = config.TRANSLATION_LOCALES.split(',');
+const config = require("../config/env")().raw;
+const LOCALES = config.TRANSLATION_LOCALES.split(",");
 const DEFAULT_LOCALE = LOCALES[0];
 
 function reactIntlMessages(filePath) {
   // Tried with the async version with promises,
   // but no performance improvements
   return babel.transformFileSync(filePath, {
-    presets: ['react', 'env'],
+    presets: ["@babel/preset-react", "@babel/preset-env", "@babel/typescript"],
     plugins: [
-      'react-intl',
-      'transform-object-rest-spread',
-      'transform-class-properties',
-    ],
-  }).metadata['react-intl'].messages;
+      "react-intl",
+      "transform-object-rest-spread",
+      "transform-class-properties"
+    ]
+  }).metadata["react-intl"].messages;
 }
 
 function messagesFromComponents(filePaths) {
@@ -37,7 +39,7 @@ function validateTranslationIdFormat(defaultMessages) {
   const errors = [];
   Object.keys(defaultMessages).forEach(translationID => {
     const isLowerId = translationID === translationID.toLowerCase();
-    const hasUnderscore = translationID.includes('_');
+    const hasUnderscore = translationID.includes("_");
 
     if (hasUnderscore) {
       errors.push(`${translationID} contains underscore$`);
@@ -47,9 +49,9 @@ function validateTranslationIdFormat(defaultMessages) {
     }
 
     if (errors.length) {
-      console.log(chalk.blue('ID naming errors were found'));
+      console.log(chalk.blue("ID naming errors were found"));
       errors.forEach(error => console.log(chalk.red(error)));
-      console.log(chalk.blue('Aborting Extraction'));
+      console.log(chalk.blue("Aborting Extraction"));
       process.exit();
     }
   });
@@ -63,7 +65,7 @@ function messageTranslations(locale) {
   const filePath = translationFile(locale);
 
   try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
   } catch (e) {
     // translation file does not exists yet, do nothing
     return {};
@@ -77,13 +79,13 @@ function idSetsAreEqual(arrayA, setB) {
 
 function allLocaleTranslationsHaveIdenticalKeys(translationsPerLocale) {
   const firstLocaleIds = new Set(
-    Object.keys(translationsPerLocale[LOCALES[0]]),
+    Object.keys(translationsPerLocale[LOCALES[0]])
   );
   for (let i = 1; i < LOCALES.length; i++) {
     const localeIds = Object.keys(translationsPerLocale[LOCALES[i]]);
 
     if (!idSetsAreEqual(localeIds, firstLocaleIds)) {
-      console.log(chalk.red('Translation files have different ids.\n')); // eslint-disable-line no-console
+      console.log(chalk.red("Translation files have different ids.\n")); // eslint-disable-line no-console
       return false;
     }
   }
@@ -94,7 +96,7 @@ function printIds(title, ids, texts, otherTexts = undefined) {
   if (ids.length > 0) {
     console.log(title);
     ids.forEach(id => {
-      const otherText = otherTexts ? ` vs "${otherTexts[id]}"` : '';
+      const otherText = otherTexts ? ` vs "${otherTexts[id]}"` : "";
       console.log(` + ${id}: "${texts[id]}"${otherText}`);
     });
     console.log();
@@ -103,16 +105,16 @@ function printIds(title, ids, texts, otherTexts = undefined) {
 
 function mergeTranslationsAndDefaultMessages(
   localeTranslations,
-  defaultMessages,
+  defaultMessages
 ) {
   const allIds = new Set([
     ...Object.keys(localeTranslations),
-    ...Object.keys(defaultMessages),
+    ...Object.keys(defaultMessages)
   ]);
   const sortedIds = [...allIds].sort();
   const translations = {};
   sortedIds.forEach(
-    id => (translations[id] = localeTranslations[id] || defaultMessages[id]),
+    id => (translations[id] = localeTranslations[id] || defaultMessages[id])
   );
   return translations;
 }
@@ -121,7 +123,7 @@ function writeJsonFileSync(filePath, object) {
   return fs.writeFileSync(filePath, `${JSON.stringify(object, null, 2)}\n`);
 }
 
-const allJsFilePaths = glob.sync(path.join(__dirname, '../**/*.js'));
+const allJsFilePaths = glob.sync(path.join(__dirname, "../**/*.[jt]s"));
 const applicationMessagesByFile = messagesFromComponents(allJsFilePaths);
 let canUpdateTranslationFiles = true;
 
@@ -149,7 +151,7 @@ const translationsPerLocale = LOCALES.reduce((acc, locale) => {
 }, {});
 
 canUpdateTranslationFiles = allLocaleTranslationsHaveIdenticalKeys(
-  translationsPerLocale,
+  translationsPerLocale
 );
 
 const defaultTranslation = translationsPerLocale[DEFAULT_LOCALE];
@@ -163,39 +165,39 @@ const unusedIds = translatedIds.filter(id => !defaultMessagesIdsSet.has(id));
 printIds(
   chalk.red(`Unused translations in ${DEFAULT_LOCALE}.json:`),
   unusedIds,
-  defaultTranslation,
+  defaultTranslation
 );
 
 canUpdateTranslationFiles = unusedIds.length === 0;
 
 const outdatedTranslationIds = defaultMessagesIds.filter(
   id =>
-    translatedIdsSet.has(id) && defaultMessages[id] !== defaultTranslation[id],
+    translatedIdsSet.has(id) && defaultMessages[id] !== defaultTranslation[id]
 );
 printIds(
-  chalk.yellow('Outdated default messages:'),
+  chalk.yellow("Outdated default messages:"),
   outdatedTranslationIds,
   defaultTranslation,
-  defaultMessages,
+  defaultMessages
 );
 
 const newIds = defaultMessagesIds.filter(id => !translatedIdsSet.has(id));
-printIds(chalk.green('New translation ids:'), newIds, defaultMessages);
+printIds(chalk.green("New translation ids:"), newIds, defaultMessages);
 
 if (canUpdateTranslationFiles) {
   LOCALES.forEach(locale => {
     const translations = mergeTranslationsAndDefaultMessages(
       translationsPerLocale[locale],
-      defaultMessages,
+      defaultMessages
     );
     writeJsonFileSync(translationFile(locale), translations);
   });
-  console.log(chalk.green('All translation files updated.'));
+  console.log(chalk.green("All translation files updated."));
 } else {
   console.log(
     chalk.red(
-      'Translation files *NOT* updated, fix above errors and run again.',
-    ),
+      "Translation files *NOT* updated, fix above errors and run again."
+    )
   );
   process.env.CI && process.exit(1); // eslint-disable-line no-unused-expressions
 }

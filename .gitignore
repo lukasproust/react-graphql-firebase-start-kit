@@ -5,8 +5,5 @@ jsconfig.json
 npm-debug.log
 yarn-error.log
 
-# Intellij params
-.idea/
-
 # VSCode
 .vscode/

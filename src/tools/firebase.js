@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
-import auth from "firebase/auth"; // eslint-disable-line no-unused-vars
+
+require("firebase/auth");
 
 firebase.initializeApp(process.env.firebase);
 
