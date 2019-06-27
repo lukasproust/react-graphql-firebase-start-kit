@@ -8,7 +8,7 @@ import getStandardizedLocale from "tools/intl/getStandardizedOrNearestLocale";
 import localStorage from "tools/localStorage";
 import firebase from "tools/firebase";
 
-import UserContext from "shared/components/UserContext";
+import UserContext from "shared/contexts/User";
 
 import Loader from "shared/components/Loader";
 
