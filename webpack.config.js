@@ -11,13 +11,12 @@ const isProd = NODE_ENV === "production";
 const srcDir = path.resolve(__dirname, "src/");
 
 module.exports = {
-  entry: {
-    app: "./src/index.js"
-  },
+  entry: ["./src/index.tsx"],
   mode: isProd ? "production" : "development",
   devtool: isProd ? "nosources-source-map" : "cheap-module-source-map",
   resolve: {
-    modules: ["node_modules", srcDir]
+    modules: ["node_modules", srcDir],
+    extensions: [".js", ".json", ".ts", ".tsx"]
   },
   devServer: {
     historyApiFallback: true,
@@ -28,12 +27,12 @@ module.exports = {
     rules: [
       {
         loader: "eslint-loader",
-        test: /\.js$/,
+        test: /\.(js|tsx?)$/,
         include: srcDir,
         enforce: "pre"
       },
       {
-        test: /\.js$/,
+        test: /\.(js|tsx?)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"

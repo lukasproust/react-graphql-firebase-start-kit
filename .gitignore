@@ -4,9 +4,6 @@ jsconfig.json
 .DS_Store
 npm-debug.log
 yarn-error.log
-
-# Intellij params
-.idea/
-
-# VSCode
 .vscode/
+
+./src/config/keys.ts
