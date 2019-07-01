@@ -40,7 +40,7 @@ function messagesFromIntlSourceFiles(): {
   [intlfilepath in string]: Message[];
 } {
   const allJsFilePaths: string[] = glob.sync(
-    path.join(__dirname, "../src/**/*intl.[jt]s")
+    path.join(__dirname, "../../../src/**/*intl.ts")
   );
   return allJsFilePaths.reduce((acc, filePath) => {
     const messages = reactIntlMessages(filePath);
@@ -66,10 +66,7 @@ export function defaultMessagesFromSources(): TranslationContent {
 }
 
 export function translationFile(locale: SupportedLocale) {
-  return path.join(
-    __dirname,
-    `../../api/src/lib/i18n/locales/${normalizeLocale(locale)}.json`
-  );
+  return path.join(__dirname, `../../locales/${normalizeLocale(locale)}.json`);
 }
 
 function translationFileContent(locale: SupportedLocale): TranslationContent {

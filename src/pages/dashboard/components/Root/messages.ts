@@ -1,8 +1,8 @@
-import { defineMessages } from 'react-intl';
+import { defineMessages } from "react-intl";
 
 export default defineMessages({
   welcome: {
-    id: 'dashboard.welcome.message',
-    defaultMessage: 'Welcome on dashboard',
-  },
+    id: "dashboard.welcome-message",
+    defaultMessage: "Welcome on dashboard"
+  }
 });

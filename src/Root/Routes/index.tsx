@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from "react";
 
 import { Route, Redirect, Switch } from "react-router-dom";
 
-import Router from "shared/components/Router";
+import Router from "shared/components/RouterCP";
 import NoMatch404 from "shared/components/NoMatch404";
 import PrivateRoute from "shared/components/PrivateRoute";
 import Loader from "shared/components/Loader";

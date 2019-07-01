@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-intl": "^2.3.18",
     "@types/react-router-dom": "^4.3.4",
+    "@types/request-promise-native": "^1.0.16",
     "@types/webpack-env": "^1.13.9",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
@@ -47,11 +48,13 @@
     "webcolors": "^1.2.2"
   },
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "NODE_ENV=development webpack-dev-server  --progress",
     "build": "webpack --mode production",
     "test": "jest",
     "lint:js": "eslint ./src/",
-    "extract-translations": "babel-node  --ignore node_modules --config-file ./.babelrc --extensions \".js,.ts\"  ./src/tools/translations/extracTranslations",
+    "extract-translations": "babel-node --ignore node_modules --config-file ./.babelrc --extensions .ts  ./src/tools/translations/extracTranslations",
+    "loco:export": "babel-node --config-file ./.babelrc --extensions .ts src/tools/translations/localize --command=export-new",
+    "loco:import": "babel-node --config-file ./.babelrc --extensions .ts src/tools/translations/localize/index --command=import-all",
     "tsc": "tsc --skipLibCheck"
   },
   "devDependencies": {

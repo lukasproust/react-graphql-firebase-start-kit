@@ -1,4 +1,5 @@
 import React from "react";
+import { intlShape, InjectedIntl } from "react-intl";
 import withStyles, { WithStyles } from "@material-ui/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -15,8 +16,12 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 import List from "./List";
 import styles from "./styles";
 import users from "./fake_data";
+import messages from "./intl";
 
-const Users: React.FC<WithStyles<typeof styles>> = ({ classes }) => (
+const Users: React.FC<WithStyles<typeof styles>> = (
+  { classes },
+  { intl: { formatMessage } }: { intl: InjectedIntl }
+) => (
   <Paper className={classes.paper}>
     <AppBar
       className={classes.searchBar}
@@ -45,7 +50,7 @@ const Users: React.FC<WithStyles<typeof styles>> = ({ classes }) => (
               color="primary"
               className={classes.addUser}
             >
-              {"Add user"}
+              {formatMessage(messages.addUser)}
             </Button>
             <Tooltip title="Reload">
               <IconButton>
@@ -71,5 +76,9 @@ const Users: React.FC<WithStyles<typeof styles>> = ({ classes }) => (
     </div>
   </Paper>
 );
+
+Users.contextTypes = {
+  intl: intlShape.isRequired
+};
 
 export default withStyles(styles)(Users);

@@ -4,5 +4,5 @@
   "login.form.button-login-label": "Login",
   "login.form.email-label": "Email",
   "login.form.password-hint": "Password Field",
-  "users.list.add.user-label": "Add user"
+  "users.list.add.user-label": "Ajouter un utilisateur"
 }
