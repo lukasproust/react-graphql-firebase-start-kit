@@ -2,8 +2,8 @@ import { argv } from "yargs"; // eslint-disable-line import/no-extraneous-depend
 import chalk from "chalk"; // eslint-disable-line import/no-extraneous-dependencies
 
 import getLocoAssets from "./api/getAll";
-import exportAllAssets from "./api/exportAll";
-import importAllAssets from "./api/importAll";
+import exportAll from "./api/exportAll";
+import importAll from "./api/importAll";
 import { getNewAssets, getLocalAssets, logAssets } from "./helpers";
 import { SUPPORTED_LOCALES } from "../../../config/locale";
 
@@ -11,7 +11,7 @@ console.log(chalk.bold.bgBlue("Translation action")); // eslint-disable-line no-
 
 switch (argv.command) {
   case "export-all":
-    exportAllAssets(getLocalAssets).reduce(
+    exportAll(getLocalAssets).reduce(
       (cur, next) => cur.then(next),
       Promise.resolve()
     );
@@ -20,17 +20,14 @@ switch (argv.command) {
     getLocoAssets()
       .then(getNewAssets)
       .then(res =>
-        exportAllAssets(res).reduce(
-          (cur, next) => cur.then(next),
-          Promise.resolve()
-        )
+        exportAll(res).reduce((cur, next) => cur.then(next), Promise.resolve())
       );
     break;
   case "get-all":
     getLocoAssets().then(logAssets);
     break;
   case "import-all":
-    importAllAssets(SUPPORTED_LOCALES).reduce(
+    importAll(SUPPORTED_LOCALES).reduce(
       (cur, next) => cur.then(next),
       Promise.resolve()
     );

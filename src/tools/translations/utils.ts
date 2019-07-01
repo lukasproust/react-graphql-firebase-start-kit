@@ -3,7 +3,6 @@ import {
   SUPPORTED_LOCALES,
   DEFAULT_LOCALE
 } from "../../config/locale";
-import normalizeLocale from "../intl/normalizeLocale";
 
 import { ALLOWED_ID_PREFIX, ALLOWED_ID_SUFFIX } from "./constants";
 import { TranslationContent, Message, TranslationPerLocale } from "./types";
@@ -66,7 +65,7 @@ export function defaultMessagesFromSources(): TranslationContent {
 }
 
 export function translationFile(locale: SupportedLocale) {
-  return path.join(__dirname, `../../locales/${normalizeLocale(locale)}.json`);
+  return path.join(__dirname, `../../locales/${locale}.json`);
 }
 
 function translationFileContent(locale: SupportedLocale): TranslationContent {

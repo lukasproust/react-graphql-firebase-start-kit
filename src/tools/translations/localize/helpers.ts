@@ -5,7 +5,7 @@ import path from "path";
 
 import { PRIVATE_KEYS } from "../../../config/keys";
 
-const getLocalAssets = () => {
+export const getLocalAssets = () => {
   const filePath = path.join(__dirname, "../../../locales/en-us.json");
 
   try {
@@ -59,7 +59,7 @@ export const apiRequest = (endpoint: string, options = undefined) => {
   return request(reqOptions);
 };
 
-const getNewAssets = locoTrans => {
+export const getNewAssets = locoTrans => {
   return new Promise(resolve => {
     const translations = getLocalAssets();
     const newKeys = Object.keys(translations)
@@ -79,7 +79,7 @@ const getNewAssets = locoTrans => {
   });
 };
 
-const logAssets = result => {
+export const logAssets = result => {
   result.map(translation =>
     console.log(chalk.green(translation.id, translation.name, translation.tags))
   );

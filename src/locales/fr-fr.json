@@ -1,8 +1,0 @@
-{
-  "dashboard.routes.menu.dashboard-label": "Dashboard",
-  "dashboard.routes.menu.users-label": "Users",
-  "login.form.button-login-label": "Login",
-  "login.form.email-label": "Email",
-  "login.form.password-hint": "Password Field",
-  "users.list.add.user-label": "Add user"
-}

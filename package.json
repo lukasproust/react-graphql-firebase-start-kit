@@ -52,9 +52,10 @@
     "build": "webpack --mode production",
     "test": "jest",
     "lint:js": "eslint ./src/",
-    "extract-translations": "babel-node --ignore node_modules --config-file ./.babelrc --extensions .ts  ./src/tools/translations/extracTranslations",
-    "loco:export": "babel-node --config-file ./.babelrc --extensions .ts src/tools/translations/localize --command=export-new",
-    "loco:import": "babel-node --config-file ./.babelrc --extensions .ts src/tools/translations/localize/index --command=import-all",
+    "babelLaunch": "babel-node --ignore node_modules --config-file ./.babelrc --extensions .ts",
+    "extract-translations": "yarn babelLaunch ./src/tools/translations/extracTranslations",
+    "loco:export": "yarn babelLaunch src/tools/translations/localize --command=export-new",
+    "loco:import": "yarn babelLaunch src/tools/translations/localize/index --command=import-all",
     "tsc": "tsc --skipLibCheck"
   },
   "devDependencies": {

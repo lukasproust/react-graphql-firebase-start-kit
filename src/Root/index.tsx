@@ -3,7 +3,6 @@ import { IntlProvider } from "react-intl";
 import { ThemeProvider } from "@material-ui/styles";
 
 import getUserLanguage from "tools/intl/getUserLocale";
-import normalizeLocale from "tools/intl/normalizeLocale";
 import getStandardizedLocale from "tools/intl/getStandardizedOrNearestLocale";
 import localStorage from "tools/localStorage";
 import firebase from "tools/firebase";
@@ -25,9 +24,7 @@ const App: React.FC = () => {
   const applyUserLocale = (userLocale: string) => {
     const locales = require.context("locales/", false, /\.json/);
     const localeKeys: string[] = locales.keys();
-    const normalizedLocale: string = normalizeLocale(
-      getStandardizedLocale(userLocale)
-    );
+    const normalizedLocale: string = getStandardizedLocale(userLocale);
     localStorage.setItem("USER_LANGUAGE", normalizedLocale);
     const translationPath = localeKeys.find(
       key => !!key.match(normalizedLocale)
@@ -53,7 +50,6 @@ const App: React.FC = () => {
     // eslint-disable-next-line no-console
     else console.log("No user connected... :(");
   });
-
   return (
     <ThemeProvider theme={theme}>
       <Fragment>

@@ -6,7 +6,7 @@ const resolveApp = (relativePath: string) =>
   path.resolve(appDirectory, relativePath);
 
 export const appIndexHtml = resolveApp("public/index.html");
-export const appIndexJs = resolveApp("src/index");
+export const appIndexTsx = resolveApp("src/index.tsx");
 export const appNodeModules = resolveApp("node_modules");
 export const appBase = "/";
 export const appSrc = resolveApp("src");

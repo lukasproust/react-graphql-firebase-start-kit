@@ -1,7 +1,7 @@
 function isLocalStorageSupported() {
-  const testKey = '__localStorageTestKey__';
+  const testKey = "__localStorageTestKey__";
   try {
-    localStorage.setItem(testKey, '');
+    localStorage.setItem(testKey, "");
     localStorage.removeItem(testKey);
     return true;
   } catch (error) {
@@ -12,40 +12,40 @@ function isLocalStorageSupported() {
 const localStorageIsSupported = isLocalStorageSupported();
 
 const customLocalStorage = {
-  setItem: (key, value) => {
+  setItem: (key: string, value: string) => {
     localStorage.setItem(key, JSON.stringify(value));
   },
 
-  getItem: key => {
+  getItem: (key: string) => {
     // Temporary compatibility bridge
     // Token syntax has changed, if parse fails, fallback on previous format
     // #MIGRATION# 01/03/2017, remove in a few releases
     try {
-      return JSON.parse(localStorage.getItem(key) || 'null');
+      return JSON.parse(localStorage.getItem(key) || "null");
     } catch (e) {
       return localStorage.getItem(key) || null;
     }
   },
 
-  removeItem: key => {
+  removeItem: (key: string) => {
     localStorage.removeItem(key);
-  },
+  }
 };
 
-function getCookieKey(key) {
+function getCookieKey(key: string) {
   return `localStorage-${key}`;
 }
 
-function setCookie(key, value) {
+function setCookie(key: string, value: string) {
   document.cookie = `${getCookieKey(key)}=${JSON.stringify(value)}`;
 }
 
 const cookieLocalStorage = {
-  setItem: (key, value) => {
+  setItem: (key: string, value: string) => {
     setCookie(key, value);
   },
 
-  getItem: key => {
+  getItem: (key: string) => {
     const cookieKey = getCookieKey(key);
     const cookieKeyLength = cookieKey.length;
     const cookies = document.cookie
@@ -56,11 +56,11 @@ const cookieLocalStorage = {
       : null;
   },
 
-  removeItem: key => {
-    setCookie(key, '');
-  },
+  removeItem: (key: string) => {
+    setCookie(key, "");
+  }
 };
 
-export default (localStorageIsSupported
+export default localStorageIsSupported
   ? customLocalStorage
-  : cookieLocalStorage);
+  : cookieLocalStorage;

@@ -1,14 +1,3 @@
 {
-  "TRANSLATION_LOCALES": "en-us,fr-fr",
-  "firebase": {
-    "apiKey": "AIzaSyBAgKBFICYr2DJ1tWrabCI0lXkUj_6-4Vc",
-    "authDomain": "react-graphql-firebase-stater.firebaseapp.com",
-    "databaseURL": "https://react-graphql-firebase-stater.firebaseio.com",
-    "projectId": "react-graphql-firebase-stater",
-    "storageBucket": "",
-    "messagingSenderId": "213555893475"
-  },
-  "loco": {
-    "apiKey": "JRyroVI_zoLza2Ws8Gfu0owWB_skm3QHG"
-  }
+  "TRANSLATION_LOCALES": "en-us,fr-fr"
 }
