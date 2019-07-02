@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
+// const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 
 const getClientEnvironment = require("./src/config/env");
 
@@ -86,7 +86,7 @@ module.exports = {
   plugins: [
     // Makes some environment variables available to the JS code.
     new webpack.DefinePlugin(env.stringified),
-    new ErrorOverlayPlugin(),
+    // new ErrorOverlayPlugin(),
     new HtmlWebPackPlugin({
       template: "./src/index.html"
     })

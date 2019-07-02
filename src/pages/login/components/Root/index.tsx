@@ -2,33 +2,34 @@ import React, { useState, useContext, Fragment } from "react";
 import { intlShape, InjectedIntl } from "react-intl";
 import { Redirect } from "react-router-dom";
 
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import HttpsIcon from "@material-ui/icons/Https";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Paper from "@material-ui/core/Paper";
+import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import UserContext from "shared/contexts/User";
 import useFormInput from "shared/hooks/useFormInput";
 
 import messages from "./intl";
-import useStyles from "./styles";
+import styles from "./styles";
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   location: { state: { from: string }; pathname: string };
   history: { push: (config: { pathname: string }) => void };
 }
 
 const Login: React.FC<Props> = (
-  { location, history },
+  { location, history, classes },
   { intl: { formatMessage } }: { intl: InjectedIntl }
 ) => {
-  const css = useStyles();
   const user = useContext(UserContext);
   const email = useFormInput("");
   const password = useFormInput("");
@@ -36,7 +37,7 @@ const Login: React.FC<Props> = (
     undefined
   );
   const [loading, setLoading] = useState<boolean>(false);
-
+  console.log("loading", loading, "errorMessage", errorMessage);
   const login = () => {
     if (!user.signInWithEmailAndPassword) return;
 
@@ -53,7 +54,7 @@ const Login: React.FC<Props> = (
   };
 
   return (
-    <div className={css.background}>
+    <div>
       <Fragment>
         {user && user.currentUser && (
           <Redirect exact from="/login" to="/users" />
@@ -68,72 +69,71 @@ const Login: React.FC<Props> = (
             />
           ))}
       </Fragment>
-      <Card className={css.card}>
-        <form>
-          <FormControl margin="dense" fullWidth>
-            <Grid container spacing={8} alignItems="flex-end">
-              <Grid item xs={2}>
-                <AccountCircle color="primary" />
-              </Grid>
-              <Grid item xs={10}>
-                <TextField
-                  {...email} // value, onChange
-                  id="email"
-                  label={formatMessage(messages.emailLabel)}
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-          </FormControl>
-          <FormControl margin="dense" fullWidth>
-            <Grid container spacing={8} alignItems="flex-end">
-              <Grid item xs={2}>
-                <HttpsIcon color="primary" />
-              </Grid>
-              <Grid item xs={10}>
-                <TextField
-                  {...password}
-                  id="password"
-                  type="password"
-                  label={formatMessage(messages.passwordlHint)}
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-          </FormControl>
-          {errorMessage && (
-            <Typography
-              classes={{ root: css.loginErrorMessage }}
-              component="p"
-              variant="body2"
-              color="error"
-              align="center"
-            >
-              {errorMessage}
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {formatMessage(messages.signIn)}
             </Typography>
-          )}
-          <CardActions className={css.login}>
-            <Button
-              variant="contained"
-              onClick={login}
-              color="primary"
-              fullWidth
-            >
-              {formatMessage(messages.login)}
-              {loading ? (
-                <CircularProgress
-                  classes={{ root: css.loader }}
-                  color="inherit"
-                  size={15}
-                  thickness={5}
-                />
-              ) : (
-                ""
-              )}
-            </Button>
-          </CardActions>
-        </form>
-      </Card>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label={formatMessage(messages.emailLabel)}
+                name="email"
+                autoFocus
+                {...email} // value, onChange hook
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label={formatMessage(messages.passwordlHint)}
+                type="password"
+                id="password"
+                {...password} // value, onChange hook
+              />
+              {/* TODO: Manage remember me function */}
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label={formatMessage(messages.remenberMe)}
+              />
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={login}
+              >
+                {formatMessage(messages.signInButton)}
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#forgot" variant="body2">
+                    {formatMessage(messages.forgotPassword)}
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#signup" variant="body2">
+                    {formatMessage(messages.noAccountSignUp)}
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
@@ -142,4 +142,4 @@ Login.contextTypes = {
   intl: intlShape.isRequired
 };
 
-export default Login;
+export default withStyles(styles)(Login);

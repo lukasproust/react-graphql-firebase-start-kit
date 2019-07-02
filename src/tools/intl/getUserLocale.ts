@@ -1,13 +1,13 @@
-import { DEFAULT_LOCALE } from "config/locale";
-import normalizeLocale from "./normalizeLocale";
+import { DEFAULT_LOCALE, SupportedLocale } from "config/locale";
+
 import getStandardizedOrNearestLocale from "./getStandardizedOrNearestLocale";
 
-const getUserLocale = () => {
+const getUserLocale = (): SupportedLocale => {
   const userLanguageStorage = localStorage.getItem("USER_LANGUAGE");
 
   return userLanguageStorage
-    ? normalizeLocale(getStandardizedOrNearestLocale(userLanguageStorage))
-    : normalizeLocale(DEFAULT_LOCALE);
+    ? getStandardizedOrNearestLocale(userLanguageStorage)
+    : DEFAULT_LOCALE;
 };
 
 export default getUserLocale;

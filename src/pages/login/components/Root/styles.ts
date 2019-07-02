@@ -1,45 +1,34 @@
-import { makeStyles } from "@material-ui/styles";
+import { createStyles } from "@material-ui/styles";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
 
-const useStyles = makeStyles({
-  "@global": {
-    html: {
-      height: "100%",
-      margin: 0
+const styles = ({ spacing, palette }: Theme) =>
+  createStyles({
+    root: {
+      height: "100vh"
     },
-    body: {
-      height: "100%",
-      margin: 0
+    image: {
+      backgroundImage: "url(https://source.unsplash.com/random)",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    },
+    paper: {
+      margin: spacing(8, 4),
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
+    },
+    avatar: {
+      margin: spacing(1),
+      backgroundColor: palette.secondary.main
+    },
+    form: {
+      width: "100%", // Fix IE 11 issue.
+      marginTop: spacing(1)
+    },
+    submit: {
+      margin: spacing(3, 0, 2)
     }
-  },
-  mainApp: {
-    display: "flex",
-    flexFlow: "column",
-    height: "100vh"
-  },
-  background: {
-    height: "100%",
-    background: "url('./images/background.jpg') center top no-repeat",
-    backgroundSize: "cover",
-    position: "relative"
-  },
-  card: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    padding: "2rem",
-    width: "15rem"
-  },
-  login: {
-    padding: "8px 0",
-    marginTop: "1rem"
-  },
-  loginErrorMessage: {
-    paddingTop: "1rem"
-  },
-  loader: {
-    marginLeft: "0.5rem"
-  }
-});
+  });
 
-export default useStyles;
+export default styles;

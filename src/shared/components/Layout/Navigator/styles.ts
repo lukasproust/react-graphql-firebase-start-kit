@@ -36,10 +36,7 @@ const styles = ({ palette, typography, spacing }: Theme) =>
     },
     itemPrimary: {
       color: "inherit",
-      fontSize: typography.fontSize,
-      "&$textDense": {
-        fontSize: typography.fontSize
-      }
+      fontSize: typography.fontSize
     },
     divider: {
       marginTop: spacing(2)

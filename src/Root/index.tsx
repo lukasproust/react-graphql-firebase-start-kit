@@ -12,6 +12,7 @@ import UserContext from "shared/contexts/User";
 import Loader from "shared/components/Loader";
 
 import theme from "config/theme";
+import { SupportedLocale } from "config/locale";
 import Routes from "./Routes";
 
 const App: React.FC = () => {
@@ -21,7 +22,7 @@ const App: React.FC = () => {
   const [authReady, setAuthReady] = useState(false);
   const user = firebase.auth();
 
-  const applyUserLocale = (userLocale: string) => {
+  const applyUserLocale = (userLocale: SupportedLocale) => {
     const locales = require.context("locales/", false, /\.json/);
     const localeKeys: string[] = locales.keys();
     const normalizedLocale: string = getStandardizedLocale(userLocale);

@@ -1,8 +1,13 @@
 {
-  "dashboard.routes.menu.dashboard-label": "Dashboard",
-  "dashboard.routes.menu.users-label": "Users",
-  "login.form.button-login-label": "Login",
+  "dashboard.routes.menu.dashboard-label": "Tableau de bord",
+  "dashboard.routes.menu.users-label": "Utilisateurs",
+  "login.form.button-forgot.password-label": "Forgot password?",
+  "login.form.button-login-label": "Identifiant",
+  "login.form.button-no-account-label": "Don't have an account? Sign Up",
+  "login.form.button-remember.me-label": "Remember me",
+  "login.form.button-sign.in.button-label": "Sign In",
+  "login.form.button-signin-label": "Sign in",
   "login.form.email-label": "Email",
-  "login.form.password-hint": "Password Field",
+  "login.form.password-hint": "Mot de passe",
   "users.list.add.user-label": "Ajouter un utilisateur"
 }

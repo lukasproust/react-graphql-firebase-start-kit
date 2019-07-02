@@ -1,4 +1,4 @@
-function isLocalStorageSupported() {
+const isLocalStorageSupported = () => {
   const testKey = "__localStorageTestKey__";
   try {
     localStorage.setItem(testKey, "");
@@ -7,9 +7,7 @@ function isLocalStorageSupported() {
   } catch (error) {
     return false;
   }
-}
-
-const localStorageIsSupported = isLocalStorageSupported();
+};
 
 const customLocalStorage = {
   setItem: (key: string, value: string) => {
@@ -61,6 +59,6 @@ const cookieLocalStorage = {
   }
 };
 
-export default localStorageIsSupported
+export default isLocalStorageSupported()
   ? customLocalStorage
   : cookieLocalStorage;
