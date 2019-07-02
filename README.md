@@ -2,6 +2,7 @@
 
 ### In progress
 
+- Remove css utils
 - Fix all lint / TS errors
 - Add some empty page to add some Router exemple
 
