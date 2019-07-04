@@ -13,7 +13,7 @@
   },
   "settings": {
     "import/resolver": {
-      "webpack": { "config": "webpack.config.js"},
+      "webpack": { "config": "webpack.config.js" },
       "typescript": {},
       "node": { "moduleDirectory": ["node_modules", "src"] }
     }
@@ -57,7 +57,7 @@
       }
     },
     {
-      "files": ["**/*.js", "**/*.jsx"],
+      "files": ["**/*.js"],
       "parser": "babel-eslint",
       "parserOptions": {
         "ecmaFeatures": {
@@ -65,7 +65,11 @@
         }
       },
       "settings": {
-        "import/ignore": [".ts", ".tsx"]
+        "import/resolver": {
+          "node": {
+            "paths": ["src"]
+          }
+        }
       },
       "plugins": ["react-hooks", "import", "prettier"],
       "rules": {
