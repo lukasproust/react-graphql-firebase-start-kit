@@ -2,14 +2,13 @@
 
 ### In progress
 
-- Remove css utils
-- Fix all lint / TS errors
-- Add some empty page to add some Router exemple
+- Force to type function retrun
 
 ### Todo list
 
 - Add Appolo and GraphQl with firebase model
 - Add some tests for a good exemple
+- Add sentry tracking
 - Add components snapshots with Storybook
 - Review the prodcution webpack config ( perf, chunks, ... )
 - Add some pre-commit (local tests, lint, transalations, ...) and post-commits

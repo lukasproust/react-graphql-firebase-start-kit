@@ -1,10 +1,17 @@
 import React from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import {
+  Route,
+  Redirect,
+  RouteProps,
+  RouteComponentProps
+} from "react-router-dom";
 
 import UserContext from "shared/contexts/User";
 
 interface Props {
-  component: React.ComponentType;
+  component:
+    | React.ComponentType<RouteComponentProps<any>> // eslint-disable-line @typescript-eslint/no-explicit-any
+    | React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 const PrivateRoute: React.FC<Props & RouteProps> = ({

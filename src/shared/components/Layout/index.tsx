@@ -8,7 +8,11 @@ import Header from "./Header";
 import { DRAWER_WIDTH } from "./constants";
 import styles from "./styles";
 
-const Layout: React.FC<WithStyles<typeof styles>> = ({ children, classes }) => {
+interface Props extends WithStyles<typeof styles> {
+  pageTitle: string;
+}
+
+const Layout: React.FC<Props> = ({ children, classes, pageTitle }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -32,7 +36,7 @@ const Layout: React.FC<WithStyles<typeof styles>> = ({ children, classes }) => {
         </Hidden>
       </nav>
       <div className={classes.appContent}>
-        <Header onDrawerToggle={handleDrawerToggle} />
+        <Header pageTitle={pageTitle} onDrawerToggle={handleDrawerToggle} />
         <main className={classes.mainContent}>{children}</main>
       </div>
     </div>

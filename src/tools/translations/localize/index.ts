@@ -4,14 +4,21 @@ import chalk from "chalk"; // eslint-disable-line import/no-extraneous-dependenc
 import getLocoAssets from "./api/getAll";
 import exportAll from "./api/exportAll";
 import importAll from "./api/importAll";
-import { getNewAssets, getLocalAssets, logAssets } from "./helpers";
 import { SUPPORTED_LOCALES } from "../../../config/locale";
+import {
+  getNewAssets,
+  getLocalAssets,
+  logAssets,
+  convertToLocalizeEntities
+} from "./helpers";
+import { Asset } from "./types";
 
 console.log(chalk.bold.bgBlue("Translation action")); // eslint-disable-line no-console
 
 switch (argv.command) {
   case "export-all":
-    exportAll(getLocalAssets).reduce(
+    exportAll(convertToLocalizeEntities(getLocalAssets())).reduce(
+      // @ts-ignore
       (cur, next) => cur.then(next),
       Promise.resolve()
     );
@@ -19,8 +26,12 @@ switch (argv.command) {
   case "export-new":
     getLocoAssets()
       .then(getNewAssets)
-      .then(res =>
-        exportAll(res).reduce((cur, next) => cur.then(next), Promise.resolve())
+      .then((newAssets: Asset[]) =>
+        exportAll(newAssets).reduce(
+          // @ts-ignore
+          (cur, next) => cur.then(next),
+          Promise.resolve()
+        )
       );
     break;
   case "get-all":

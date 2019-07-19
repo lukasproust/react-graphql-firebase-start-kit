@@ -25,8 +25,8 @@ const menu: Menu[] = [
   {
     id: "Administration",
     children: [
-      { id: "Users", icon: <PeopleIcon />, active: true },
-      { id: "App", icon: <SettingsIcon /> }
+      { id: "App", icon: <SettingsIcon /> },
+      { id: "Users", icon: <PeopleIcon />, active: true }
     ]
   }
 ];

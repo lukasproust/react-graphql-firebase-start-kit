@@ -18,6 +18,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import UserContext from "shared/contexts/User";
 import useFormInput from "shared/hooks/useFormInput";
 
+import { ROUTES as LOGIN_ROUTES } from "pages/login/routes";
+
 import messages from "./intl";
 import styles from "./styles";
 
@@ -57,13 +59,13 @@ const Login: React.FC<Props> = (
     <div>
       <Fragment>
         {user && user.currentUser && (
-          <Redirect exact from="/login" to="/users" />
+          <Redirect exact from={LOGIN_ROUTES.HOME} to="/users" />
         )}
         {!user ||
-          (!user.currentUser && location.pathname !== "/login" && (
+          (!user.currentUser && location.pathname !== LOGIN_ROUTES.HOME && (
             <Redirect
               to={{
-                pathname: "/login", //  TODO add segment
+                pathname: LOGIN_ROUTES.HOME, //  TODO add segment
                 state: { from: location }
               }}
             />
@@ -72,7 +74,7 @@ const Login: React.FC<Props> = (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper}>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />

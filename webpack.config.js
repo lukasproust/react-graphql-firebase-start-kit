@@ -1,8 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-// const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
-
 const getClientEnvironment = require("./src/config/env");
 
 const env = getClientEnvironment();
@@ -18,7 +16,12 @@ module.exports = {
     modules: ["node_modules", srcDir],
     extensions: [".js", ".json", ".ts", ".tsx"]
   },
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/"
+  },
   devServer: {
+    contentBase: path.join(__dirname, "public"),
     historyApiFallback: true,
     hot: true,
     noInfo: true
@@ -48,28 +51,6 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader",
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: "[path]___[name]__[local]___[hash:base64:5]"
-            }
-          },
-          {
-            loader: "postcss-loader"
-          }
-        ]
-      },
-      {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
@@ -86,9 +67,8 @@ module.exports = {
   plugins: [
     // Makes some environment variables available to the JS code.
     new webpack.DefinePlugin(env.stringified),
-    // new ErrorOverlayPlugin(),
     new HtmlWebPackPlugin({
-      template: "./src/index.html"
+      template: path.resolve(__dirname, "public/index.html")
     })
   ]
 };

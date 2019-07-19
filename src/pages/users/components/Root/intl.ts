@@ -1,8 +1,8 @@
 import { defineMessages } from "react-intl";
 
 export default defineMessages({
-  addUser: {
-    id: "users.list.add.user-label",
-    defaultMessage: "Add user"
+  pageTitle: {
+    id: "users.page-title",
+    defaultMessage: "Users managment"
   }
 });

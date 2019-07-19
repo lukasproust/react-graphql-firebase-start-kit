@@ -6,4 +6,4 @@ export const ALLOWED_ID_SUFFIX = [
   "hint"
 ];
 
-export const ALLOWED_ID_PREFIX = ["login", "dashboard", "users"];
+export const ALLOWED_ID_PREFIX = ["login", "dashboard", "users", "shared"];

@@ -3,6 +3,13 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 
 const styles = ({ typography, spacing }: Theme) =>
   createStyles({
+    root: {
+      width: "100%",
+      overflowX: "auto"
+    },
+    table: {
+      minWidth: 700
+    },
     paper: {
       maxWidth: 936,
       margin: "auto",

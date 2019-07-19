@@ -13,7 +13,7 @@ import Loader from "shared/components/Loader";
 
 import theme from "config/theme";
 import { SupportedLocale } from "config/locale";
-import Routes from "./Routes";
+import RoutesList from "./RoutesList";
 
 const App: React.FC = () => {
   const [translations, setTranslations] = useState<object | undefined>(
@@ -58,7 +58,7 @@ const App: React.FC = () => {
         {translations && authReady && (
           <IntlProvider locale="en" messages={translations}>
             <UserContext.Provider value={user}>
-              <Routes />
+              <RoutesList />
             </UserContext.Provider>
           </IntlProvider>
         )}

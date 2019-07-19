@@ -1,5 +1,6 @@
 import React from "react";
 import { intlShape, InjectedIntl } from "react-intl";
+
 import withStyles, { WithStyles } from "@material-ui/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,12 +14,12 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
-import List from "./List";
+import ListComponent from "./Component";
 import styles from "./styles";
-import users from "./fake_data";
+import users from "../../fake_data";
 import messages from "./intl";
 
-const Users: React.FC<WithStyles<typeof styles>> = (
+const List: React.FC<WithStyles<typeof styles>> = (
   { classes },
   { intl: { formatMessage } }: { intl: InjectedIntl }
 ) => (
@@ -37,10 +38,10 @@ const Users: React.FC<WithStyles<typeof styles>> = (
           <Grid item xs>
             <TextField
               fullWidth
-              placeholder="Search by email address, phone number, or user UID"
+              placeholder={formatMessage(messages.searchPlaceholder)}
               InputProps={{
-                disableUnderline: true,
-                className: classes.searchInput
+                className: classes.searchInput,
+                disableUnderline: true
               }}
             />
           </Grid>
@@ -52,7 +53,7 @@ const Users: React.FC<WithStyles<typeof styles>> = (
             >
               {formatMessage(messages.addUser)}
             </Button>
-            <Tooltip title="Reload">
+            <Tooltip title={formatMessage(messages.reload)}>
               <IconButton>
                 <RefreshIcon className={classes.block} color="inherit" />
               </IconButton>
@@ -63,22 +64,22 @@ const Users: React.FC<WithStyles<typeof styles>> = (
     </AppBar>
     <div className={classes.contentWrapper}>
       {users.length > 0 ? (
-        <List users={users} />
+        <ListComponent users={users} />
       ) : (
         <Typography
+          className={classes.noUsersPlaceholder}
           color="textSecondary"
           align="center"
-          className={classes.noUsersPlaceholder}
         >
-          {"No users for this project yet"}
+          {formatMessage(messages.noUsers)}
         </Typography>
       )}
     </div>
   </Paper>
 );
 
-Users.contextTypes = {
+List.contextTypes = {
   intl: intlShape.isRequired
 };
 
-export default withStyles(styles)(Users);
+export default withStyles(styles)(List);

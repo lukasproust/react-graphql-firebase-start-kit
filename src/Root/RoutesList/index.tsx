@@ -7,7 +7,8 @@ import NoMatch404 from "shared/components/NoMatch404";
 import PrivateRoute from "shared/components/PrivateRoute";
 import Loader from "shared/components/Loader";
 
-// const Dashboard = lazy(() => import("modules/dashboard/components/Root"));
+import { ROUTES as LOGIN_ROUTES } from "pages/login/routes";
+
 const Users = lazy(() => import("pages/users/components/Root"));
 const Login = lazy(() => import("pages/login/components/Root"));
 
@@ -15,10 +16,10 @@ const Routes: React.FC = () => (
   <Router>
     <Suspense fallback={<Loader />}>
       <Switch>
-        <Redirect exact from="/" to="/login" />
-        <Route path="/login" component={Login} />
+        {/* Redirect by default on Login component, he managed the redicrection alone if user is connected -> */}
+        <Redirect exact from="/" to={LOGIN_ROUTES.HOME} />
+        <Route exact path={LOGIN_ROUTES.HOME} component={Login} />
         <PrivateRoute path="/users" component={Users} />
-        {/* <PrivateRoute path="/dashboard" component={Dashboard} /> */}
         <Route component={NoMatch404} />
       </Switch>
     </Suspense>

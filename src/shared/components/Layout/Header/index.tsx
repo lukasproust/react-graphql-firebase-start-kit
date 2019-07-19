@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
+import { intlShape, InjectedIntl } from "react-intl";
 
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
@@ -17,16 +18,32 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 
+import getActiveRoute from "helpers/route/getActiveRoute";
+import getRouteWithParameters from "helpers/route/getRouteWithParameters";
 import UserContext from "shared/contexts/User";
 
+import { ROUTES as LOGIN_ROUTES } from "pages/login/routes";
+import { ROUTES as USERS_ROUTES } from "pages/users/routes";
+
+import messages from "./intl";
 import styles from "./styles";
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
+  pageTitle: string;
   onDrawerToggle: () => void;
 }
 
-const Header: React.FC<Props> = ({ classes, onDrawerToggle, history }) => {
+const Header: React.FC<Props> = (
+  { classes, onDrawerToggle, history, pageTitle, location, match },
+  { intl: { formatMessage } }: { intl: InjectedIntl }
+) => {
   const user = useContext(UserContext);
+  const alerts: {}[] = [];
+  const activeTabLink = getActiveRoute(USERS_ROUTES, location.pathname);
+
+  const handleTabsChange = (_e: React.ChangeEvent<{}>, route: string) => {
+    history.push(getRouteWithParameters(route, match.params));
+  };
 
   return (
     <React.Fragment>
@@ -36,10 +53,9 @@ const Header: React.FC<Props> = ({ classes, onDrawerToggle, history }) => {
             <Hidden smUp>
               <Grid item>
                 <IconButton
-                  color="inherit"
-                  aria-label="Open drawer"
-                  onClick={onDrawerToggle}
                   className={classes.menuButton}
+                  color="inherit"
+                  onClick={onDrawerToggle}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -50,24 +66,31 @@ const Header: React.FC<Props> = ({ classes, onDrawerToggle, history }) => {
               <Link
                 className={classes.link}
                 variant="body2"
-                href="http://github.com"
+                href="https://github.com/lukasproust/react-graphql-firebase-start-kit"
               >
-                {"Go to github"}
+                {formatMessage(messages.githubLink)}
               </Link>
             </Grid>
             <Grid item>
-              <Tooltip title="Alerts • No alters">
+              <Tooltip
+                title={
+                  alerts.length > 0
+                    ? formatMessage(messages.alerts, { number: alerts.length })
+                    : formatMessage(messages.noAlerts)
+                }
+              >
                 <IconButton color="inherit">
                   <NotificationsIcon />
                 </IconButton>
               </Tooltip>
-            </Grid>
-            <Grid item>
+              <IconButton color="inherit" className={classes.iconButtonAvatar}>
+                <Avatar src="https://api.adorable.io/avatars/50/lukas.proust.pngCopy to Clipboard" />
+              </IconButton>
               <Tooltip
-                title="Logout"
+                title={formatMessage(messages.logout)}
                 onClick={() => {
                   user.signOut().then(() => {
-                    history.push({ pathname: "/users" });
+                    history.push({ pathname: LOGIN_ROUTES.HOME });
                   });
                 }}
               >
@@ -75,11 +98,6 @@ const Header: React.FC<Props> = ({ classes, onDrawerToggle, history }) => {
                   <ExitToAppIcon />
                 </IconButton>
               </Tooltip>
-            </Grid>
-            <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar src="/static/images/avatar/1.jpg" />
-              </IconButton>
             </Grid>
           </Grid>
         </Toolbar>
@@ -95,12 +113,13 @@ const Header: React.FC<Props> = ({ classes, onDrawerToggle, history }) => {
           <Grid container alignItems="center" spacing={8}>
             <Grid item xs>
               <Typography color="inherit" variant="h5">
-                {"Users managment"}
+                {pageTitle}
               </Typography>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
+      {/* TODO manage this app menu bar with some params generate by the layout parent */}
       <AppBar
         component="div"
         className={classes.secondaryBar}
@@ -108,13 +127,31 @@ const Header: React.FC<Props> = ({ classes, onDrawerToggle, history }) => {
         position="static"
         elevation={0}
       >
-        <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Groups" disabled />
+        <Tabs
+          value={activeTabLink}
+          textColor="inherit"
+          onChange={handleTabsChange}
+        >
+          <Tab
+            textColor="inherit"
+            value={USERS_ROUTES.USER_LIST}
+            label={formatMessage(messages.usersTab)}
+          />
+          <Tab
+            textColor="inherit"
+            value={USERS_ROUTES.USER_DETAIL}
+            label={formatMessage(messages.userDetailTab)}
+            disabled
+          />
+          <Tab textColor="inherit" value={""} label="Groups" disabled />
         </Tabs>
       </AppBar>
     </React.Fragment>
   );
+};
+
+Header.contextTypes = {
+  intl: intlShape.isRequired
 };
 
 export default withStyles(styles)(withRouter(Header));
