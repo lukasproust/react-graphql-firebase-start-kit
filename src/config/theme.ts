@@ -1,9 +1,9 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, Theme } from "@material-ui/core/styles";
 
 // Paperbase theme
 // https://github.com/mui-org/material-ui/blob/master/docs/src/pages/premium-themes/paperbase/Paperbase.js
 
-const theme = createMuiTheme({
+const muiBaseTheme = createMuiTheme({
   typography: {
     h5: {
       fontWeight: 500,
@@ -23,8 +23,8 @@ const theme = createMuiTheme({
   }
 });
 
-const overidedTheme = createMuiTheme({
-  ...theme,
+const theme: Theme = {
+  ...muiBaseTheme,
   overrides: {
     MuiDrawer: {
       paper: {
@@ -44,13 +44,13 @@ const overidedTheme = createMuiTheme({
     },
     MuiTabs: {
       root: {
-        marginLeft: theme.spacing(1)
+        marginLeft: muiBaseTheme.spacing(1)
       },
       indicator: {
         height: 3,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
-        backgroundColor: theme.palette.common.white
+        backgroundColor: muiBaseTheme.palette.common.white
       }
     },
     MuiTab: {
@@ -59,7 +59,7 @@ const overidedTheme = createMuiTheme({
         margin: "0 16px",
         minWidth: 0,
         padding: 0,
-        [theme.breakpoints.up("md")]: {
+        [muiBaseTheme.breakpoints.up("md")]: {
           padding: 0,
           minWidth: 0
         }
@@ -67,7 +67,7 @@ const overidedTheme = createMuiTheme({
     },
     MuiIconButton: {
       root: {
-        padding: theme.spacing(1)
+        padding: muiBaseTheme.spacing(1)
       }
     },
     MuiTooltip: {
@@ -82,7 +82,7 @@ const overidedTheme = createMuiTheme({
     },
     MuiListItemText: {
       primary: {
-        fontWeight: theme.typography.fontWeightMedium
+        fontWeight: muiBaseTheme.typography.fontWeightMedium
       }
     },
     MuiListItemIcon: {
@@ -107,11 +107,11 @@ const overidedTheme = createMuiTheme({
     }
   },
   mixins: {
-    ...theme.mixins,
+    ...muiBaseTheme.mixins,
     toolbar: {
       minHeight: 48
     }
   }
-});
+};
 
-export default overidedTheme;
+export default theme;

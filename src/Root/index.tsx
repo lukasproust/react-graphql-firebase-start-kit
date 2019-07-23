@@ -51,6 +51,7 @@ const App: React.FC = () => {
     // eslint-disable-next-line no-console
     else console.log("No user connected... :(");
   });
+
   return (
     <ThemeProvider theme={theme}>
       <Fragment>

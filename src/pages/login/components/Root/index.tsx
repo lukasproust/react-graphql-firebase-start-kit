@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles } from "@material-ui/styles";
 import Avatar from "@material-ui/core/Avatar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -29,7 +29,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const Login: React.FC<Props> = (
-  { location, history, classes },
+  props,
   { intl: { formatMessage } }: { intl: InjectedIntl }
 ) => {
   const user = useContext(UserContext);
@@ -39,6 +39,7 @@ const Login: React.FC<Props> = (
     undefined
   );
   const [loading, setLoading] = useState<boolean>(false);
+  const { location, history, classes } = props;
   console.log("loading", loading, "errorMessage", errorMessage);
   const login = () => {
     if (!user.signInWithEmailAndPassword) return;

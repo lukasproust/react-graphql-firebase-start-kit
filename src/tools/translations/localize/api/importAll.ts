@@ -45,9 +45,8 @@ const importAssets = (
           fileTranslationPath,
           `${JSON.stringify(assets, null, 2)}\n`
         );
-
+        // eslint-disable-next-line no-console
         console.log(
-          // eslint-disable-line no-console
           chalk.green(
             `Successfully imported assets for ${locale}`,
             fileTranslationPath

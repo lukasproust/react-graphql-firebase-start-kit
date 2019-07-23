@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Router } from "react-router-dom";
 
-import browserHistory from "shared/helpers/route/browserHistory";
+import browserHistory from "helpers/route/browserHistory";
 
 interface Props {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles } from "@material-ui/styles";
 
 import styles from "./styles";
 

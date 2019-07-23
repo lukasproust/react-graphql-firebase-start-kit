@@ -34,6 +34,8 @@ const getRouteWithParameters = (
   ) {
     // eslint-disable-next-line no-console
     console.error("Missing parameter in route ", routeWithParameters);
+  } else if (routeWithParameters.includes("/:")) {
+    return undefined;
   }
 
   return routeWithParameters;
