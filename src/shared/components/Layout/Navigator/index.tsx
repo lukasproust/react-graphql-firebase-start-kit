@@ -1,39 +1,39 @@
-import React, { Fragment } from "react";
-import classNames from "classnames";
+import React, { Fragment } from 'react';
+import classNames from 'classnames';
 
-import { withStyles, WithStyles } from "@material-ui/styles";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from "@material-ui/icons/Home";
-import PeopleIcon from "@material-ui/icons/People";
-import { PaperProps } from "@material-ui/core/Paper/Paper";
-import PermMediaOutlinedIcon from "@material-ui/icons/PhotoSizeSelectActual";
-import SettingsIcon from "@material-ui/icons/Settings";
+import { withStyles, WithStyles } from '@material-ui/styles';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import HomeIcon from '@material-ui/icons/Home';
+import PeopleIcon from '@material-ui/icons/People';
+import { PaperProps } from '@material-ui/core/Paper/Paper';
+import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
+import SettingsIcon from '@material-ui/icons/Settings';
 
-import { Menu } from "./types";
-import styles from "./styles";
+import { Menu } from './types';
+import styles from './styles';
 
 const menu: Menu[] = [
   {
-    id: "Dashboard",
-    children: [{ id: "Countries", icon: <PermMediaOutlinedIcon /> }]
+    id: 'Dashboard',
+    children: [{ id: 'Countries', icon: <PermMediaOutlinedIcon /> }],
   },
   {
-    id: "Administration",
+    id: 'Administration',
     children: [
-      { id: "App", icon: <SettingsIcon /> },
-      { id: "Users", icon: <PeopleIcon />, active: true }
-    ]
-  }
+      { id: 'App', icon: <SettingsIcon /> },
+      { id: 'Users', icon: <PeopleIcon />, active: true },
+    ],
+  },
 ];
 
 interface Props extends WithStyles<typeof styles> {
   paperProps: Partial<PaperProps>;
-  variant?: "permanent" | "persistent" | "temporary";
+  variant?: 'permanent' | 'persistent' | 'temporary';
   open?: boolean;
   onClose?: () => void;
 }
@@ -43,10 +43,10 @@ const Navigator: React.FC<Props> = ({
   variant,
   open,
   onClose,
-  paperProps
+  paperProps,
 }) => (
   <Drawer
-    variant={variant || "permanent"}
+    variant={variant || 'permanent'}
     open={open}
     onClose={onClose}
     PaperProps={paperProps}
@@ -56,10 +56,10 @@ const Navigator: React.FC<Props> = ({
         className={classNames(
           classes.firebase,
           classes.item,
-          classes.itemCategory
+          classes.itemCategory,
         )}
       >
-        {"App title"}
+        {'App title'}
       </ListItem>
       <ListItem className={classNames(classes.item, classes.itemCategory)}>
         <ListItemIcon>
@@ -67,10 +67,10 @@ const Navigator: React.FC<Props> = ({
         </ListItemIcon>
         <ListItemText
           classes={{
-            primary: classes.itemPrimary
+            primary: classes.itemPrimary,
           }}
         >
-          {"Project Overview"}
+          {'Project Overview'}
         </ListItemText>
       </ListItem>
       {menu.map(({ id, children }) => (
@@ -78,7 +78,7 @@ const Navigator: React.FC<Props> = ({
           <ListItem className={classes.categoryHeader}>
             <ListItemText
               classes={{
-                primary: classes.categoryHeaderPrimary
+                primary: classes.categoryHeaderPrimary,
               }}
             >
               {id}
@@ -92,13 +92,13 @@ const Navigator: React.FC<Props> = ({
               className={classNames(
                 classes.item,
                 classes.itemActionable,
-                active && classes.itemActiveItem
+                active && classes.itemActiveItem,
               )}
             >
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText
                 classes={{
-                  primary: classes.itemPrimary
+                  primary: classes.itemPrimary,
                 }}
               >
                 {childId}

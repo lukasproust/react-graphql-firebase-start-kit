@@ -1,7 +1,7 @@
-import { SEGMENTS } from "./segments";
+import { SEGMENTS } from './segments';
 
 const HOME = `/${SEGMENTS.HOME}`;
 
 export const ROUTES = {
-  HOME
+  HOME,
 };

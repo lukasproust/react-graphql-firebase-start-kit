@@ -4,6 +4,6 @@
  */
 
 export const PRIVATE_KEYS = {
-  loco: "", // Loco private key here
-  firebase: {} // firebase configuration here
+  loco: '', // Loco private key here
+  firebase: {}, // firebase configuration here
 };

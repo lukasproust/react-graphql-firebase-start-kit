@@ -1,12 +1,12 @@
-import React, { useState, memo } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import withStyles, { WithStyles } from "@material-ui/styles/withStyles";
-import Hidden from "@material-ui/core/Hidden";
+import React, { useState, memo } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
+import Hidden from '@material-ui/core/Hidden';
 
-import Navigator from "./Navigator";
-import Header from "./Header";
-import { DRAWER_WIDTH } from "./constants";
-import styles from "./styles";
+import Navigator from './Navigator';
+import Header from './Header';
+import { DRAWER_WIDTH } from './constants';
+import styles from './styles';
 
 interface Props extends WithStyles<typeof styles> {
   pageTitle: string;

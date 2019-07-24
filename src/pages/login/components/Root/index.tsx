@@ -1,27 +1,27 @@
-import React, { useState, useContext, Fragment } from "react";
-import { intlShape, InjectedIntl } from "react-intl";
-import { Redirect } from "react-router-dom";
+import React, { useState, useContext, Fragment } from 'react';
+import { intlShape, InjectedIntl } from 'react-intl';
+import { Redirect } from 'react-router-dom';
 
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
-import { withStyles, WithStyles } from "@material-ui/styles";
-import Avatar from "@material-ui/core/Avatar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import { withStyles, WithStyles } from '@material-ui/styles';
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
-import UserContext from "shared/contexts/User";
-import useFormInput from "shared/hooks/useFormInput";
+import UserContext from 'shared/contexts/User';
+import useFormInput from 'shared/hooks/useFormInput';
 
-import { ROUTES as LOGIN_ROUTES } from "pages/login/routes";
+import { ROUTES as LOGIN_ROUTES } from 'pages/login/routes';
 
-import messages from "./intl";
-import styles from "./styles";
+import messages from './intl';
+import styles from './styles';
 
 interface Props extends WithStyles<typeof styles> {
   location: { state: { from: string }; pathname: string };
@@ -30,17 +30,17 @@ interface Props extends WithStyles<typeof styles> {
 
 const Login: React.FC<Props> = (
   props,
-  { intl: { formatMessage } }: { intl: InjectedIntl }
+  { intl: { formatMessage } }: { intl: InjectedIntl },
 ) => {
   const user = useContext(UserContext);
-  const email = useFormInput("");
-  const password = useFormInput("");
+  const email = useFormInput('');
+  const password = useFormInput('');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
+    undefined,
   );
   const [loading, setLoading] = useState<boolean>(false);
   const { location, history, classes } = props;
-  console.log("loading", loading, "errorMessage", errorMessage);
+  console.log('loading', loading, 'errorMessage', errorMessage);
   const login = () => {
     if (!user.signInWithEmailAndPassword) return;
 
@@ -48,7 +48,7 @@ const Login: React.FC<Props> = (
     user
       .signInWithEmailAndPassword(email.value, password.value)
       .then(() => {
-        history.push({ pathname: "/users" });
+        history.push({ pathname: '/users' });
       })
       .catch((error: { message: string }) => {
         setErrorMessage(error.message);
@@ -67,12 +67,12 @@ const Login: React.FC<Props> = (
             <Redirect
               to={{
                 pathname: LOGIN_ROUTES.HOME, //  TODO add segment
-                state: { from: location }
+                state: { from: location },
               }}
             />
           ))}
       </Fragment>
-      <Grid container component="main" className={classes.root}>
+      <Grid container className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper}>
@@ -142,7 +142,7 @@ const Login: React.FC<Props> = (
 };
 
 Login.contextTypes = {
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
 };
 
 export default withStyles(styles)(Login);

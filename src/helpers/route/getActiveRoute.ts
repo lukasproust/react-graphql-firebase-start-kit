@@ -1,15 +1,15 @@
-import { matchPath } from "react-router-dom";
+import { matchPath } from 'react-router-dom';
 
 const getActiveRoute = (
   routes: Record<string, string>,
-  currentPath: string
+  currentPath: string,
 ) => {
   const currentRouteKey = Object.keys(routes).find(key =>
     matchPath(currentPath, {
       path: routes[key],
       exact: true,
-      strict: false
-    })
+      strict: false,
+    }),
   );
   return currentRouteKey ? routes[currentRouteKey] : undefined;
 };

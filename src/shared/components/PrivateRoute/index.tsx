@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   Route,
   Redirect,
   RouteProps,
-  RouteComponentProps
-} from "react-router-dom";
+  RouteComponentProps,
+} from 'react-router-dom';
 
-import UserContext from "shared/contexts/User";
+import UserContext from 'shared/contexts/User';
 
 interface Props {
   component:
@@ -28,8 +28,8 @@ const PrivateRoute: React.FC<Props & RouteProps> = ({
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
-                state: { from: props.location }
+                pathname: '/login',
+                state: { from: props.location },
               }}
             />
           )

@@ -1,7 +1,7 @@
 const isLocalStorageSupported = () => {
-  const testKey = "__localStorageTestKey__";
+  const testKey = '__localStorageTestKey__';
   try {
-    localStorage.setItem(testKey, "");
+    localStorage.setItem(testKey, '');
     localStorage.removeItem(testKey);
     return true;
   } catch (error) {
@@ -19,7 +19,7 @@ const customLocalStorage = {
     // Token syntax has changed, if parse fails, fallback on previous format
     // #MIGRATION# 01/03/2017, remove in a few releases
     try {
-      return JSON.parse(localStorage.getItem(key) || "null");
+      return JSON.parse(localStorage.getItem(key) || 'null');
     } catch (e) {
       return localStorage.getItem(key) || null;
     }
@@ -27,7 +27,7 @@ const customLocalStorage = {
 
   removeItem: (key: string) => {
     localStorage.removeItem(key);
-  }
+  },
 };
 
 function getCookieKey(key: string) {
@@ -55,8 +55,8 @@ const cookieLocalStorage = {
   },
 
   removeItem: (key: string) => {
-    setCookie(key, "");
-  }
+    setCookie(key, '');
+  },
 };
 
 export default isLocalStorageSupported()

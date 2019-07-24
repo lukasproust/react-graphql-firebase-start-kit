@@ -14,7 +14,7 @@
     "@material-ui/styles": "4.2.0",
     "@types/classnames": "^2.2.9",
     "@types/jest": "^24.0.15",
-    "@types/react-dom": "^16.8.4",
+    "@types/react-dom": "^16.8.5",
     "@types/react-intl": "^2.3.18",
     "@types/react-router-dom": "^4.3.4",
     "@types/recompose": "^0.30.6",
@@ -22,7 +22,7 @@
     "@types/webpack-env": "^1.14.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "autoprefixer": "^9.6.1",
-    "babel-plugin-react-intl": "^4.1.0",
+    "babel-plugin-react-intl": "^4.1.2",
     "classnames": "^2.2.6",
     "cssnano": "^4.1.10",
     "eslint-loader": "^2.2.1",
@@ -32,7 +32,9 @@
     "glob": "^7.1.4",
     "graphql": "^14.4.2",
     "history": "^4.9.0",
+    "husky": "^3.0.1",
     "intl": "^1.2.5",
+    "lint-staged": "^9.2.0",
     "mkdirp": "^0.5.1",
     "postcss-import": "^12.0.0",
     "postcss-loader": "^3.0.0",
@@ -51,16 +53,22 @@
     "webcolors": "^1.2.2"
   },
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server  --progress",
+    "dev": "NODE_ENV=development webpack-dev-server --progress",
     "build": "webpack --mode production",
-    "test": "jest",
-    "lint:js": "eslint ./src/",
+    "test": "NODE_ENV=test jest --passWithNoTests",
+    "tsc": "tsc --skipLibCheck && echo",
+    "lint:ts": "eslint --ext ts,tsx --cache src",
+    "prettier:ts": "prettier --config '.prettierrc' --write './src/**/*.?(ts?(x))'",
     "babelLaunch": "babel-node --ignore node_modules --config-file ./.babelrc --extensions .ts",
     "extract-translations": "yarn babelLaunch src/tools/translations/extracTranslations",
     "loco:export-all": "yarn babelLaunch src/tools/translations/localize --command=export-all",
     "loco:export": "yarn babelLaunch src/tools/translations/localize --command=export-new",
-    "loco:import": "yarn babelLaunch src/tools/translations/localize/index --command=import-all",
-    "tsc": "tsc --skipLibCheck"
+    "loco:import": "yarn babelLaunch src/tools/translations/localize/index --command=import-all"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -96,10 +104,5 @@
     "webpack": "^4.37.0",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(css)$": "identity-obj-proxy"
-    }
   }
 }

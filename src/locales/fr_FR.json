@@ -19,6 +19,7 @@
   "users.list.created.at-label": "Created At",
   "users.list.email-label": "Email",
   "users.list.group-label": "Group",
+  "users.list.name-label": "Name",
   "users.list.no.users-label": "No users for this project yet",
   "users.list.reload-label": "Reload",
   "users.list.search-placeholder": "Search by email address, phone number, or user UID",

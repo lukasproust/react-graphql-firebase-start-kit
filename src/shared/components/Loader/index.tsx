@@ -1,8 +1,8 @@
-import React, { memo } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles, WithStyles } from "@material-ui/styles";
+import React, { memo } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles, WithStyles } from '@material-ui/styles';
 
-import styles from "./styles";
+import styles from './styles';
 
 const Loader: React.FC<WithStyles<typeof styles>> = ({ classes }) => {
   return (
