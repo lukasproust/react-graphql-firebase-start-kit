@@ -1,9 +1,9 @@
-import { DEFAULT_LOCALE, SupportedLocale } from "config/locale";
+import { DEFAULT_LOCALE, SupportedLocale } from 'config/locale';
 
-import getStandardizedOrNearestLocale from "./getStandardizedOrNearestLocale";
+import getStandardizedOrNearestLocale from './getStandardizedOrNearestLocale';
 
 const getUserLocale = (): SupportedLocale => {
-  const userLanguageStorage = localStorage.getItem("USER_LANGUAGE");
+  const userLanguageStorage = localStorage.getItem('USER_LANGUAGE');
 
   return userLanguageStorage
     ? getStandardizedOrNearestLocale(userLanguageStorage)

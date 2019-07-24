@@ -1,4 +1,4 @@
-import { SupportedLocale } from "config/locale";
+import { SupportedLocale } from 'config/locale';
 
 export type TranslationContent = Record<string, string>;
 

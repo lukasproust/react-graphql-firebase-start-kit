@@ -6,7 +6,7 @@
 
 ### Todo list
 
-- Add Appolo and GraphQl with firebase model
+- Add GraphQL Appolo client
 - Add some tests for a good exemple
 - Add sentry tracking
 - Add components snapshots with Storybook

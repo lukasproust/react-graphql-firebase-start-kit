@@ -1,3 +1,3 @@
 export const SEGMENTS = {
-  HOME: "login"
+  HOME: 'login',
 };

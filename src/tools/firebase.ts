@@ -1,8 +1,8 @@
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
 
-import { PRIVATE_KEYS } from "config/keys";
+import { PRIVATE_KEYS } from 'config/keys';
 
-require("firebase/auth");
+require('firebase/auth');
 
 firebase.initializeApp(PRIVATE_KEYS.firebase);
 

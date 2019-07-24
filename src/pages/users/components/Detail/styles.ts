@@ -1,8 +1,8 @@
-import { createStyles } from "@material-ui/styles";
+import { createStyles } from '@material-ui/styles';
 
 const styles = () =>
   createStyles({
-    container: {}
+    container: {},
   });
 
 export default styles;

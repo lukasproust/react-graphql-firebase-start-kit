@@ -1,32 +1,32 @@
-import React, { useContext } from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
-import { intlShape, InjectedIntl } from "react-intl";
+import React, { useContext } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { intlShape, InjectedIntl } from 'react-intl';
 
-import AppBar from "@material-ui/core/AppBar";
-import Avatar from "@material-ui/core/Avatar";
-import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
-import Toolbar from "@material-ui/core/Toolbar";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-import { withStyles, WithStyles } from "@material-ui/styles";
+import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import { withStyles, WithStyles } from '@material-ui/styles';
 
-import getActiveRoute from "helpers/route/getActiveRoute";
-import getRouteWithParameters from "helpers/route/getRouteWithParameters";
-import UserContext from "shared/contexts/User";
+import getActiveRoute from 'helpers/route/getActiveRoute';
+import getRouteWithParameters from 'helpers/route/getRouteWithParameters';
+import UserContext from 'shared/contexts/User';
 
-import { ROUTES as LOGIN_ROUTES } from "pages/login/routes";
-import { ROUTES as USERS_ROUTES } from "pages/users/routes";
+import { ROUTES as LOGIN_ROUTES } from 'pages/login/routes';
+import { ROUTES as USERS_ROUTES } from 'pages/users/routes';
 
-import messages from "./intl";
-import styles from "./styles";
+import messages from './intl';
+import styles from './styles';
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
   pageTitle: string;
@@ -35,14 +35,15 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
 
 const Header: React.FC<Props> = (
   { classes, onDrawerToggle, history, pageTitle, location, match },
-  { intl: { formatMessage } }: { intl: InjectedIntl }
+  { intl: { formatMessage } }: { intl: InjectedIntl },
 ) => {
   const user = useContext(UserContext);
   const alerts: {}[] = [];
   const activeTabLink = getActiveRoute(USERS_ROUTES, location.pathname);
 
   const handleTabsChange = (_e: React.ChangeEvent<{}>, route: string) => {
-    history.push(getRouteWithParameters(route, match.params));
+    const nextRoute = getRouteWithParameters(route, match.params);
+    if (nextRoute) history.push(nextRoute);
   };
 
   return (
@@ -143,7 +144,7 @@ const Header: React.FC<Props> = (
             label={formatMessage(messages.userDetailTab)}
             disabled
           />
-          <Tab textColor="inherit" value={""} label="Groups" disabled />
+          <Tab textColor="inherit" value={''} label="Groups" disabled />
         </Tabs>
       </AppBar>
     </React.Fragment>
@@ -151,7 +152,7 @@ const Header: React.FC<Props> = (
 };
 
 Header.contextTypes = {
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
 };
 
 export default withStyles(styles)(withRouter(Header));

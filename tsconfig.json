@@ -3,7 +3,7 @@
     "target": "ESNEXT",
     "module": "ESNEXT",
     "moduleResolution": "node",
-    "allowJs": true,
+    "allowJs": false,
     "jsx": "preserve",
     "noEmit": true,
     "isolatedModules": true,
@@ -11,7 +11,6 @@
     "esModuleInterop": true,
     "strict": true,
     "noImplicitAny": true,
-    // Remove strict because strict: true
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,

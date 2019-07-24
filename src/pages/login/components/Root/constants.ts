@@ -1,1 +1,1 @@
-export type LoginErrorsCode = "auth/argument-error";
+export type LoginErrorsCode = 'auth/argument-error';

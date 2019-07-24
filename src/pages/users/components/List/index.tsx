@@ -1,27 +1,27 @@
-import React from "react";
-import { intlShape, InjectedIntl } from "react-intl";
+import React from 'react';
+import { intlShape, InjectedIntl } from 'react-intl';
 
-import withStyles, { WithStyles } from "@material-ui/styles/withStyles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import RefreshIcon from "@material-ui/icons/Refresh";
+import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
-import ListComponent from "./Component";
-import styles from "./styles";
-import users from "../../fake_data";
-import messages from "./intl";
+import ListComponent from './Component';
+import styles from './styles';
+import users from '../../fake_data';
+import messages from './intl';
 
 const List: React.FC<WithStyles<typeof styles>> = (
   { classes },
-  { intl: { formatMessage } }: { intl: InjectedIntl }
+  { intl: { formatMessage } }: { intl: InjectedIntl },
 ) => (
   <Paper className={classes.paper}>
     <AppBar
@@ -41,7 +41,7 @@ const List: React.FC<WithStyles<typeof styles>> = (
               placeholder={formatMessage(messages.searchPlaceholder)}
               InputProps={{
                 className: classes.searchInput,
-                disableUnderline: true
+                disableUnderline: true,
               }}
             />
           </Grid>
@@ -79,7 +79,7 @@ const List: React.FC<WithStyles<typeof styles>> = (
 );
 
 List.contextTypes = {
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
 };
 
 export default withStyles(styles)(List);

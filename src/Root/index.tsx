@@ -1,34 +1,34 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { IntlProvider } from "react-intl";
-import { ThemeProvider } from "@material-ui/styles";
+import React, { useState, useEffect, Fragment } from 'react';
+import { IntlProvider } from 'react-intl';
+import { ThemeProvider } from '@material-ui/styles';
 
-import getUserLanguage from "tools/intl/getUserLocale";
-import getStandardizedLocale from "tools/intl/getStandardizedOrNearestLocale";
-import localStorage from "tools/localStorage";
-import firebase from "tools/firebase";
+import getUserLanguage from 'tools/intl/getUserLocale';
+import getStandardizedLocale from 'tools/intl/getStandardizedOrNearestLocale';
+import localStorage from 'tools/localStorage';
+import firebase from 'tools/firebase';
 
-import UserContext from "shared/contexts/User";
+import UserContext from 'shared/contexts/User';
 
-import Loader from "shared/components/Loader";
+import Loader from 'shared/components/Loader';
 
-import theme from "config/theme";
-import { SupportedLocale } from "config/locale";
-import RoutesList from "./RoutesList";
+import theme from 'config/theme';
+import { SupportedLocale } from 'config/locale';
+import RoutesList from './RoutesList';
 
 const App: React.FC = () => {
   const [translations, setTranslations] = useState<object | undefined>(
-    undefined
+    undefined,
   );
   const [authReady, setAuthReady] = useState(false);
   const user = firebase.auth();
 
   const applyUserLocale = (userLocale: SupportedLocale) => {
-    const locales = require.context("locales/", false, /\.json/);
+    const locales = require.context('locales/', false, /\.json/);
     const localeKeys: string[] = locales.keys();
     const normalizedLocale: string = getStandardizedLocale(userLocale);
-    localStorage.setItem("USER_LANGUAGE", normalizedLocale);
+    localStorage.setItem('USER_LANGUAGE', normalizedLocale);
     const translationPath = localeKeys.find(
-      key => !!key.match(normalizedLocale)
+      key => !!key.match(normalizedLocale),
     );
     if (translationPath) setTranslations(locales(translationPath));
   };
@@ -47,15 +47,14 @@ const App: React.FC = () => {
   user.onAuthStateChanged(userHas => {
     setAuthReady(true);
     // eslint-disable-next-line no-console
-    if (userHas) console.log("User is connected :)", userHas);
+    if (userHas) console.log('User is connected :)', userHas);
     // eslint-disable-next-line no-console
-    else console.log("No user connected... :(");
+    else console.log('No user connected... :(');
   });
 
   return (
     <ThemeProvider theme={theme}>
       <Fragment>
-        {!translations || (!authReady && <Loader />)}
         {translations && authReady && (
           <IntlProvider locale="en" messages={translations}>
             <UserContext.Provider value={user}>
@@ -63,6 +62,7 @@ const App: React.FC = () => {
             </UserContext.Provider>
           </IntlProvider>
         )}
+        {!translations || (!authReady && <Loader />)}
       </Fragment>
     </ThemeProvider>
   );

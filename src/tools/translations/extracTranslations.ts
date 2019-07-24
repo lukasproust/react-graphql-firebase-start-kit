@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../../config/locale";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from '../../config/locale';
 import {
   allLocaleTranslationsHaveIdenticalKeys,
   defaultMessagesFromSources,
@@ -8,16 +8,16 @@ import {
   mergeTranslationsAndDefaultMessages,
   writeJsonFileSync,
   printIds,
-  printRedundantTranslationTexts
-} from "./utils";
+  printRedundantTranslationTexts,
+} from './utils';
 
 /* eslint-disable no-bitwise */
 /* eslint-disable no-console */
-process.env.NODE_ENV = "development";
+process.env.NODE_ENV = 'development';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line import/no-extraneous-dependencies
-const chalk = require("chalk");
+const chalk = require('chalk');
 
 let canUpdateTranslationFiles = true;
 
@@ -25,9 +25,9 @@ const defaultMessages = defaultMessagesFromSources();
 
 const errors = validateTranslationIdFormat(defaultMessages);
 if (errors.length) {
-  console.log(chalk.blue("ID naming errors were found"));
+  console.log(chalk.blue('ID naming errors were found'));
   errors.forEach(error => console.log(chalk.red(error)));
-  console.log(chalk.blue("Aborting Extraction"));
+  console.log(chalk.blue('Aborting Extraction'));
   process.exit();
 }
 
@@ -37,7 +37,7 @@ printRedundantTranslationTexts(translationsPerLocale, defaultMessages);
 
 // @ts-ignore '&=' operator
 canUpdateTranslationFiles &= allLocaleTranslationsHaveIdenticalKeys(
-  translationsPerLocale
+  translationsPerLocale,
 );
 
 const defaultTranslation = translationsPerLocale[DEFAULT_LOCALE];
@@ -55,7 +55,7 @@ const unusedIds = translatedIds.filter(id => !defaultMessagesIdsSet.has(id));
 printIds(
   chalk.red(`Unused translations in ${DEFAULT_LOCALE}.json:`),
   unusedIds,
-  defaultTranslation
+  defaultTranslation,
 );
 
 // @ts-ignore '&=' operator
@@ -63,32 +63,32 @@ canUpdateTranslationFiles &= unusedIds.length === 0;
 
 const outdatedTranslationIds = defaultMessagesIds.filter(
   id =>
-    translatedIdsSet.has(id) && defaultMessages[id] !== defaultTranslation[id]
+    translatedIdsSet.has(id) && defaultMessages[id] !== defaultTranslation[id],
 );
 printIds(
-  chalk.yellow("Outdated default messages:"),
+  chalk.yellow('Outdated default messages:'),
   outdatedTranslationIds,
   defaultTranslation,
-  defaultMessages
+  defaultMessages,
 );
 
 const newIds = defaultMessagesIds.filter(id => !translatedIdsSet.has(id));
-printIds(chalk.green("New translation ids:"), newIds, defaultMessages);
+printIds(chalk.green('New translation ids:'), newIds, defaultMessages);
 
 if (canUpdateTranslationFiles) {
   SUPPORTED_LOCALES.forEach(locale => {
     const translations = mergeTranslationsAndDefaultMessages(
       translationsPerLocale[locale],
-      defaultMessages
+      defaultMessages,
     );
     writeJsonFileSync(translationFile(locale), translations);
   });
-  console.log(chalk.green("All translation files updated.")); // eslint-disable-line no-console
+  console.log(chalk.green('All translation files updated.')); // eslint-disable-line no-console
 } else {
   console.log(
     chalk.red(
-      "Translation files *NOT* updated, fix above errors and run again."
-    )
+      'Translation files *NOT* updated, fix above errors and run again.',
+    ),
   ); // eslint-disable-line no-console
   process.env.CI && process.exit(1); // eslint-disable-line no-unused-expressions
 }

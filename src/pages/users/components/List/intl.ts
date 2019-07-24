@@ -1,40 +1,44 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   addUser: {
-    id: "users.list.add.user-label",
-    defaultMessage: "Add user"
+    id: 'users.list.add.user-label',
+    defaultMessage: 'Add user',
   },
   noUsers: {
-    id: "users.list.no.users-label",
-    defaultMessage: "No users for this project yet"
+    id: 'users.list.no.users-label',
+    defaultMessage: 'No users for this project yet',
   },
   reload: {
-    id: "users.list.reload-label",
-    defaultMessage: "Reload"
+    id: 'users.list.reload-label',
+    defaultMessage: 'Reload',
   },
   searchPlaceholder: {
-    id: "users.list.search-placeholder",
-    defaultMessage: "Search by email address, phone number, or user UID"
+    id: 'users.list.search-placeholder',
+    defaultMessage: 'Search by email address, phone number, or user UID',
+  },
+  name: {
+    id: 'users.list.name-label',
+    defaultMessage: 'Name',
   },
   email: {
-    id: "users.list.email-label",
-    defaultMessage: "Email"
+    id: 'users.list.email-label',
+    defaultMessage: 'Email',
   },
   group: {
-    id: "users.list.group-label",
-    defaultMessage: "Group"
+    id: 'users.list.group-label',
+    defaultMessage: 'Group',
   },
   createdAt: {
-    id: "users.list.created.at-label",
-    defaultMessage: "Created At"
+    id: 'users.list.created.at-label',
+    defaultMessage: 'Created At',
   },
   updatedAt: {
-    id: "users.list.updated.at-label",
-    defaultMessage: "Updated At"
+    id: 'users.list.updated.at-label',
+    defaultMessage: 'Updated At',
   },
   actions: {
-    id: "users.list.actions-label",
-    defaultMessage: "Actions"
-  }
+    id: 'users.list.actions-label',
+    defaultMessage: 'Actions',
+  },
 });
