@@ -1,47 +1,55 @@
 const { GraphQLServer } = require('graphql-yoga');
 
-const links = [
+const users = [
   {
-    id: 'link-0',
-    url: 'www.howtographql.com',
+    id: '1',
+    name: 'Lukas PROUST',
+    email: 'lukas.proust@gmail.com',
     description: 'Fullstack tutorial for GraphQL',
+    createdAt: new Date('2018-01-01'),
+    updatedAt: new Date('2018-01-02'),
   },
 ];
 
 // 2
-let idCount = links.length;
+let idCount = users.length;
 const resolvers = {
   Query: {
-    info: () => `This is the API of a Hackernews Clone`,
-    feed: () => links,
+    info: () => `This is the API to testing front-env`,
+    users: () => users,
   },
   Mutation: {
     // 2
-    post: (parent, args) => {
+    post: (parent, { email, name, description }) => {
       idCount += 1;
-      const link = {
-        id: `link-${idCount}`,
-        description: args.description,
-        url: args.url,
+      const user = {
+        id: `${idCount}`,
+        name,
+        email,
+        description: description || '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
-      links.push(link);
-      return link;
+      users.push(user);
+      return user;
     },
-    update: (parent, args) => {
-      const linkToUpdateIndex = links.findIndex(link => link.id === args.id);
-      if (linkToUpdateIndex !== -1) {
-        links[linkToUpdateIndex] = {
-          ...links[linkToUpdateIndex],
-          description: args.description,
-          url: args.url,
+    update: (parent, { id, name, email, description }) => {
+      const userToUpdateIndex = users.findIndex(user => user.id === id);
+      if (userToUpdateIndex !== -1) {
+        users[userToUpdateIndex] = {
+          ...users[userToUpdateIndex],
+          description,
+          name,
+          email,
+          updatedAt: new Date(),
         };
-        return links[linkToUpdateIndex];
+        return users[userToUpdateIndex];
       }
       return undefined;
     },
-    delete: (parent, args) => {
-      const linkToDeleteIndex = links.findIndex(link => link.id === args.id);
-      links.splice(linkToDeleteIndex, 1);
+    delete: (parent, { id }) => {
+      const userToDeleteIndex = users.findIndex(user => user.id === id);
+      users.splice(userToDeleteIndex, 1);
     },
   },
 };
@@ -51,4 +59,5 @@ const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
   resolvers,
 });
+
 server.start(() => console.log(`Server is running on http://localhost:4000`));
