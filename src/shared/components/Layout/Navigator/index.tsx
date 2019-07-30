@@ -95,7 +95,9 @@ const Navigator: React.FC<Props> = ({
                 active && classes.itemActiveItem,
               )}
             >
-              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemIcon>
+                <>{icon}</>
+              </ListItemIcon>
               <ListItemText
                 classes={{
                   primary: classes.itemPrimary,

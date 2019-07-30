@@ -6,9 +6,8 @@ import getUserLanguage from 'tools/intl/getUserLocale';
 import getStandardizedLocale from 'tools/intl/getStandardizedOrNearestLocale';
 import localStorage from 'tools/localStorage';
 import firebase from 'tools/firebase';
-
+import ApolloProvider from 'tools/ApolloProvider';
 import UserContext from 'shared/contexts/User';
-
 import Loader from 'shared/components/Loader';
 
 import theme from 'config/theme';
@@ -47,24 +46,34 @@ const App: React.FC = () => {
   user.onAuthStateChanged(userHas => {
     setAuthReady(true);
     // eslint-disable-next-line no-console
-    if (userHas) console.log('User is connected :)', userHas);
+    if (userHas) {
+      console.log('User is connected :)', userHas);
+      userHas
+        .getIdToken()
+        .then(idToken => localStorage.setItem('AUTH_TOKEN', idToken));
+    }
     // eslint-disable-next-line no-console
-    else console.log('No user connected... :(');
+    else {
+      localStorage.removeItem('AUTH_TOKEN');
+      console.log('No user connected... :(');
+    }
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Fragment>
-        {translations && authReady && (
-          <IntlProvider locale="en" messages={translations}>
-            <UserContext.Provider value={user}>
-              <RoutesList />
-            </UserContext.Provider>
-          </IntlProvider>
-        )}
-        {!translations || (!authReady && <Loader />)}
-      </Fragment>
-    </ThemeProvider>
+    <ApolloProvider>
+      <ThemeProvider theme={theme}>
+        <Fragment>
+          {translations && authReady && (
+            <IntlProvider locale="en" messages={translations}>
+              <UserContext.Provider value={user}>
+                <RoutesList />
+              </UserContext.Provider>
+            </IntlProvider>
+          )}
+          {!translations || (!authReady && <Loader />)}
+        </Fragment>
+      </ThemeProvider>
+    </ApolloProvider>
   );
 };
 
