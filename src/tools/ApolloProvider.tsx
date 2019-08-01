@@ -1,17 +1,16 @@
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-client';
-import { ApolloLink, split } from 'apollo-link';
 import { RetryLink } from 'apollo-link-retry';
 import { createUploadLink } from 'apollo-upload-client';
-import { getMainDefinition } from 'apollo-utilities';
+import { setContext } from 'apollo-link-context';
+
 import {
   InMemoryCache,
   // IntrospectionFragmentMatcher,
 } from 'apollo-cache-inmemory';
 
-import localStorage from 'tools/localStorage';
-
+// import localStorage from 'tools/localStorage';
 // import schema from 'config/typesSchema.json';
 
 const Provider: React.FC = ({ children }) => {
@@ -23,38 +22,29 @@ const Provider: React.FC = ({ children }) => {
   // cache configuration
   // const cache = new InMemoryCache({ fragmentMatcher });
   const cache = new InMemoryCache();
-  const fullHost = process.env.API_HOST;
 
   // base link
   const httpLink = createUploadLink({
-    uri: `${fullHost}/graphql`,
+    uri: process.env.API_HOST,
   });
 
-  const getFullToken = () => {
+  const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
     const token = localStorage.getItem('AUTH_TOKEN');
-    return token ? `Bearer ${token}` : null;
-  };
-
-  // handle auth
-  const middlewareLink = new ApolloLink((operation, forward) => {
-    operation.setContext({
+    // return the headers to the context so httpLink can read them
+    return {
       headers: {
-        authorization: getFullToken(),
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
       },
-    });
-    return forward ? forward(operation) : null;
+    };
   });
 
   // handle retry on network errors
   const retryLink = new RetryLink();
 
-  const link = split(({ query }) => {
-    const { kind, operation } = getMainDefinition(query);
-    return kind === 'OperationDefinition' && operation === 'subscription';
-  }, httpLink);
-
   // link chain, httpLink must always be last
-  const unifiedLink = middlewareLink.concat(retryLink).concat(link);
+  const unifiedLink = authLink.concat(retryLink).concat(httpLink);
 
   const client = new ApolloClient({ link: unifiedLink, cache });
 

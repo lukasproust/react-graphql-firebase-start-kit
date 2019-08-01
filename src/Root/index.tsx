@@ -15,9 +15,9 @@ import { SupportedLocale } from 'config/locale';
 import RoutesList from './RoutesList';
 
 const App: React.FC = () => {
-  const [translations, setTranslations] = useState<object | undefined>(
-    undefined,
-  );
+  const [translations, setTranslations] = useState<
+    Record<string, string> | undefined
+  >(undefined);
   const [authReady, setAuthReady] = useState(false);
   const user = firebase.auth();
 
@@ -25,7 +25,9 @@ const App: React.FC = () => {
     const locales = require.context('locales/', false, /\.json/);
     const localeKeys: string[] = locales.keys();
     const normalizedLocale: string = getStandardizedLocale(userLocale);
+
     localStorage.setItem('USER_LANGUAGE', normalizedLocale);
+
     const translationPath = localeKeys.find(
       key => !!key.match(normalizedLocale),
     );
@@ -43,19 +45,14 @@ const App: React.FC = () => {
     applyUserLocale(getUserLanguage());
   }, []);
 
-  user.onAuthStateChanged(userHas => {
+  user.onAuthStateChanged(currentUser => {
     setAuthReady(true);
-    // eslint-disable-next-line no-console
-    if (userHas) {
-      console.log('User is connected :)', userHas);
-      userHas
+    if (currentUser) {
+      currentUser
         .getIdToken()
         .then(idToken => localStorage.setItem('AUTH_TOKEN', idToken));
-    }
-    // eslint-disable-next-line no-console
-    else {
+    } else {
       localStorage.removeItem('AUTH_TOKEN');
-      console.log('No user connected... :(');
     }
   });
 

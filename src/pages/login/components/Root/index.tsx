@@ -1,5 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
-import { intlShape, InjectedIntl } from 'react-intl';
+import { IntlContext } from 'react-intl';
 import { Redirect } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
@@ -28,10 +28,8 @@ interface Props extends WithStyles<typeof styles> {
   history: { push: (config: { pathname: string }) => void };
 }
 
-const Login: React.FC<Props> = (
-  props,
-  { intl: { formatMessage } }: { intl: InjectedIntl },
-) => {
+const Login: React.FC<Props> = props => {
+  const { formatMessage } = useContext(IntlContext);
   const user = useContext(UserContext);
   const email = useFormInput('');
   const password = useFormInput('');
@@ -139,10 +137,6 @@ const Login: React.FC<Props> = (
       </Grid>
     </div>
   );
-};
-
-Login.contextTypes = {
-  intl: intlShape.isRequired,
 };
 
 export default withStyles(styles)(Login);

@@ -1,0 +1,18 @@
+mutation createUser(
+  $email: String!
+  $displayName: String!
+  $password: String!
+  $emailVerified: Boolean
+) {
+  post(
+    email: $email
+    displayName: $displayName
+    password: $password
+    emailVerified: $emailVerified
+  ) {
+    id: uid
+    email
+    displayName
+    emailVerified
+  }
+}

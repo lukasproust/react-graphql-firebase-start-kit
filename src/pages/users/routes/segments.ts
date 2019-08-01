@@ -1,7 +1,7 @@
 export const SEGMENTS = {
   HOME: 'users',
   LIST: 'list',
-  DETAILS: 'details',
+  EDIT: 'edit',
 };
 
 export const PARAMS = {

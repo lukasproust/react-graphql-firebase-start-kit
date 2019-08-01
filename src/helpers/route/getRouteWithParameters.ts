@@ -1,5 +1,5 @@
-// this regex matches (/:abc123) and the literal /undefined
-const UNSET_OPTIONNAL_AT_END = /\(\/:[^\\)]*\)$|\/undefined$/;
+// this regex matches /:abc123? and the literal /undefined
+const UNSET_OPTIONNAL_AT_END = /\/:.*\?$|\/undefined$/;
 
 const getRouteWithParameters = (
   route: string,
@@ -9,8 +9,8 @@ const getRouteWithParameters = (
   let result = route;
   Object.keys(params).forEach(key => {
     const value = encodeURIComponent(params[key]);
-    const regex = new RegExp(`\\(?/:${key}\\)?([\\(/].*)?$`);
-    result = result.replace(regex, `/${value}$1`);
+    const regex = new RegExp(`\\/(:${key}\\??)`);
+    result = result.replace(regex, `/${value}`);
   });
 
   // Strip optional unset parameters at end of route

@@ -8,3 +8,4 @@ yarn-error.log
 .eslintcache
 
 src/config/keys.ts
+api/config/keys.ts

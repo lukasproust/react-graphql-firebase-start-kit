@@ -1,21 +1,9 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  addUser: {
-    id: 'users.list.add.user-label',
-    defaultMessage: 'Add user',
-  },
   noUsers: {
     id: 'users.list.no.users-label',
     defaultMessage: 'No users for this project yet',
-  },
-  reload: {
-    id: 'users.list.reload-label',
-    defaultMessage: 'Reload',
-  },
-  searchPlaceholder: {
-    id: 'users.list.search-placeholder',
-    defaultMessage: 'Search by email address, phone number, or user UID',
   },
   name: {
     id: 'users.list.name-label',
@@ -40,5 +28,9 @@ export default defineMessages({
   actions: {
     id: 'users.list.actions-label',
     defaultMessage: 'Actions',
+  },
+  errorFetchUsers: {
+    id: 'users.list.error-label',
+    defaultMessage: 'Cannot fetch users...',
   },
 });
