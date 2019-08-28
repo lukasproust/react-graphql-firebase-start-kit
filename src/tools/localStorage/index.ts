@@ -1,3 +1,5 @@
+import { AllowedStorageKeys } from './types';
+
 const isLocalStorageSupported = () => {
   const testKey = '__localStorageTestKey__';
   try {
@@ -10,11 +12,11 @@ const isLocalStorageSupported = () => {
 };
 
 const customLocalStorage = {
-  setItem: (key: string, value: string) => {
+  setItem: (key: AllowedStorageKeys, value: string) => {
     localStorage.setItem(key, JSON.stringify(value));
   },
 
-  getItem: (key: string) => {
+  getItem: (key: AllowedStorageKeys) => {
     // Temporary compatibility bridge
     // Token syntax has changed, if parse fails, fallback on previous format
     // #MIGRATION# 01/03/2017, remove in a few releases
@@ -25,7 +27,7 @@ const customLocalStorage = {
     }
   },
 
-  removeItem: (key: string) => {
+  removeItem: (key: AllowedStorageKeys) => {
     localStorage.removeItem(key);
   },
 };
@@ -39,11 +41,11 @@ function setCookie(key: string, value: string) {
 }
 
 const cookieLocalStorage = {
-  setItem: (key: string, value: string) => {
+  setItem: (key: AllowedStorageKeys, value: string) => {
     setCookie(key, value);
   },
 
-  getItem: (key: string) => {
+  getItem: (key: AllowedStorageKeys) => {
     const cookieKey = getCookieKey(key);
     const cookieKeyLength = cookieKey.length;
     const cookies = document.cookie
@@ -54,7 +56,7 @@ const cookieLocalStorage = {
       : null;
   },
 
-  removeItem: (key: string) => {
+  removeItem: (key: AllowedStorageKeys) => {
     setCookie(key, '');
   },
 };

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { intlShape, InjectedIntl } from 'react-intl';
+import { IntlContext } from 'react-intl';
 
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -33,10 +33,15 @@ interface Props extends WithStyles<typeof styles>, RouteComponentProps {
   onDrawerToggle: () => void;
 }
 
-const Header: React.FC<Props> = (
-  { classes, onDrawerToggle, history, pageTitle, location, match },
-  { intl: { formatMessage } }: { intl: InjectedIntl },
-) => {
+const Header: React.FC<Props> = ({
+  classes,
+  onDrawerToggle,
+  history,
+  pageTitle,
+  location,
+  match,
+}) => {
+  const { formatMessage } = useContext(IntlContext);
   const user = useContext(UserContext);
   const alerts: {}[] = [];
   const activeTabLink = getActiveRoute(USERS_ROUTES, location.pathname);
@@ -140,7 +145,7 @@ const Header: React.FC<Props> = (
           />
           <Tab
             textColor="inherit"
-            value={USERS_ROUTES.USER_DETAIL}
+            value={USERS_ROUTES.USER_EDIT}
             label={formatMessage(messages.userDetailTab)}
             disabled
           />
@@ -149,10 +154,6 @@ const Header: React.FC<Props> = (
       </AppBar>
     </React.Fragment>
   );
-};
-
-Header.contextTypes = {
-  intl: intlShape.isRequired,
 };
 
 export default withStyles(styles)(withRouter(Header));

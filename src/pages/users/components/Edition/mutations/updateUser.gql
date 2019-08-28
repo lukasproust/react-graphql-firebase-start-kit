@@ -1,0 +1,18 @@
+mutation updateUser(
+  $id: String!
+  $email: String
+  $displayName: String
+  $emailVerified: Boolean
+) {
+  update(
+    uid: $id
+    email: $email
+    displayName: $displayName
+    emailVerified: $emailVerified
+  ) {
+    id: uid
+    email
+    displayName
+    emailVerified
+  }
+}

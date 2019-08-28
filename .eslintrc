@@ -55,6 +55,39 @@
           { "extensions": [".js", ".tsx"] }
         ]
       }
+    },
+    {
+      "files": ["**/*.gql"],
+      "parser": "babel-eslint",
+      "rules": {
+        "graphql/template-strings": [
+          "error",
+          {
+            "env": "literal",
+            "validators": [
+              "FieldsOnCorrectType",
+              "KnownArgumentNames",
+              "KnownTypeNames",
+              "NoUnusedVariables",
+              "OverlappingFieldsCanBeMerged",
+              "ScalarLeafs",
+              "UniqueArgumentNames",
+              "UniqueInputFieldNames",
+              "UniqueVariableNames",
+              "ValuesOfCorrectType",
+              "VariablesAreInputTypes",
+              "VariablesInAllowedPosition"
+            ]
+          }
+        ],
+        "graphql/required-fields": [
+          "error",
+          {
+            "env": "literal",
+            "requiredFields": ["id"]
+          }
+        ]
+      }
     }
   ]
 }

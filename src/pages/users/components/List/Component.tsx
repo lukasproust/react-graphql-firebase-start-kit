@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import { intlShape, InjectedIntl } from 'react-intl';
+import React, { memo, useContext } from 'react';
+import { IntlContext } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
@@ -13,8 +13,8 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import getRouteWithParameters from 'helpers/route/getRouteWithParameters';
 import { ROUTES } from 'pages/users/routes';
+import { User } from 'pages/users/types';
 
-import { User } from '../../types';
 import styles from './styles';
 import messages from './intl';
 
@@ -22,12 +22,10 @@ interface Props extends WithStyles<typeof styles> {
   users: User[];
 }
 
-const ListComponent: React.FC<Props> = (
-  { classes, users },
-  { intl: { formatMessage } }: { intl: InjectedIntl },
-) => {
+const ListComponent: React.FC<Props> = ({ classes, users }) => {
+  const { formatMessage } = useContext(IntlContext);
   const renderEditingLink = (user: User) => {
-    const userEditingLink = getRouteWithParameters(ROUTES.USER_DETAIL, {
+    const userEditingLink = getRouteWithParameters(ROUTES.USER_EDIT, {
       userId: user.id,
     });
 
@@ -63,12 +61,12 @@ const ListComponent: React.FC<Props> = (
           {users.map(user => (
             <TableRow key={user.id}>
               <TableCell component="th" scope="row">
-                {user.name}
+                {user.displayName}
               </TableCell>
               <TableCell align="right">{user.email}</TableCell>
-              <TableCell align="right">{user.group}</TableCell>
-              <TableCell align="right">{user.createdAt}</TableCell>
-              <TableCell align="right">{user.updatedAt}</TableCell>
+              <TableCell align="right">{'-'}</TableCell>
+              <TableCell align="right">{'-'}</TableCell>
+              <TableCell align="right">{'-'}</TableCell>
               <TableCell align="center" padding="checkbox">
                 {renderEditingLink(user)}
               </TableCell>
@@ -78,10 +76,6 @@ const ListComponent: React.FC<Props> = (
       </Table>
     </Paper>
   );
-};
-
-ListComponent.contextTypes = {
-  intl: intlShape.isRequired,
 };
 
 export default memo(withStyles(styles)(ListComponent));

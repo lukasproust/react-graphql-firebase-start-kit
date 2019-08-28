@@ -1,3 +1,4 @@
 {
-  "TRANSLATION_LOCALES": "en-us,fr-fr"
+  "TRANSLATION_LOCALES": "en-us,fr-fr",
+  "API_HOST": ""
 }

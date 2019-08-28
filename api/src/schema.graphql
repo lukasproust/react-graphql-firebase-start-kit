@@ -1,0 +1,41 @@
+type Query {
+  info: String!
+  serverTime: String!
+  users: [FirebaseUser!]!
+  me: FirebaseUser
+  user(uid: String!): FirebaseUser
+}
+
+type Mutation {
+  post(
+    email: String!
+    password: String!
+    displayName: String!
+    emailVerified: Boolean
+  ): FirebaseUser!
+  update(
+    uid: String!
+    email: String
+    phoneNumber: String
+    emailVerified: Boolean
+    password: String
+    displayName: String
+    photoURL: String
+    disabled: Boolean
+  ): FirebaseUser!
+  delete(uid: ID!): FirebaseUserUid!
+}
+
+type FirebaseUserUid {
+  uid: String
+}
+
+type FirebaseUser {
+  uid: String!
+  email: String!
+  emailVerified: Boolean
+  displayName: String
+  photoURL: String
+  disabled: Boolean
+  tokensValidAfterTime: String
+}
