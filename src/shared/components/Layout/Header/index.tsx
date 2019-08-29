@@ -52,7 +52,7 @@ const Header: React.FC<Props> = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={8} alignItems="center">
@@ -152,7 +152,7 @@ const Header: React.FC<Props> = ({
           <Tab textColor="inherit" value={''} label="Groups" disabled />
         </Tabs>
       </AppBar>
-    </React.Fragment>
+    </>
   );
 };
 

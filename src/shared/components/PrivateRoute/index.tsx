@@ -16,15 +16,23 @@ interface Props {
 
 const PrivateRoute: React.FC<Props & RouteProps> = ({
   component: Component,
-  ...rest
+  location,
+  path,
+  exact,
+  sensitive,
+  strict,
 }) => (
   <UserContext.Consumer>
     {user => (
       <Route
-        {...rest}
+        location={location}
+        path={path}
+        exact={exact}
+        sensitive={sensitive}
+        strict={strict}
         render={props =>
           user && user.currentUser ? (
-            <Component {...props} />
+            <Component {...props} /> // eslint-disable-line react/jsx-props-no-spreading
           ) : (
             <Redirect
               to={{

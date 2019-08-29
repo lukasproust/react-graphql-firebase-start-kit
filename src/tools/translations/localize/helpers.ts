@@ -38,16 +38,14 @@ export const apiRequest = (
   options: object | undefined = undefined,
 ): RequestPromise<LocoAsset> => {
   const uri = `https://localise.biz/api/${endpoint}`;
-  const reqOptions = Object.assign(
-    {
-      uri,
-      headers: {
-        Authorization: `Loco ${PRIVATE_KEYS.loco}`,
-      },
-      json: true,
+  const reqOptions = {
+    uri,
+    headers: {
+      Authorization: `Loco ${PRIVATE_KEYS.loco}`,
     },
-    options,
-  );
+    json: true,
+    ...options,
+  };
 
   return request(reqOptions);
 };

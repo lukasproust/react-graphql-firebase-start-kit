@@ -48,6 +48,7 @@
       },
       "plugins": ["@typescript-eslint"],
       "rules": {
+        "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-object-literal-type-assertion": "off",
         "react/jsx-filename-extension": [
