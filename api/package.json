@@ -5,39 +5,40 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_PATH=src NODE_ENV=development nodemon --watch src --ext ts,json --inspect --exec babel-node --ignore node_modules --config-file ./.babelrc --extensions .ts src/index.ts",
-    "eslint": "eslint --ext ts --cache",
-    "eslint:all": "yarn eslint src"
+    "eslint:all": "yarn eslint src",
+    "tsc": "tsc --skipLibCheck && echo",
+    "lint:ts": "eslint --ext ts --cache src"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "firebase-admin": "^8.3.0",
+    "firebase-admin": "^8.4.0",
     "graphql-tools": "^4.0.5",
-    "graphql-yoga": "^1.18.1"
+    "graphql-yoga": "^1.18.3"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.4",
-    "@babel/core": "7.4.5",
-    "@babel/node": "7.4.5",
-    "@babel/plugin-proposal-class-properties": "7.4.4",
-    "@babel/preset-env": "7.4.5",
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/node": "7.5.5",
+    "@babel/plugin-proposal-class-properties": "7.5.5",
+    "@babel/preset-env": "7.5.5",
     "@babel/preset-typescript": "7.3.3",
-    "@typescript-eslint/eslint-plugin": "1.10.2",
-    "@typescript-eslint/parser": "1.10.2",
+    "@typescript-eslint/eslint-plugin": "2.0.0",
+    "@typescript-eslint/parser": "2.0.0",
     "babel-core": "^6.26.3",
-    "babel-eslint": "10.0.1",
+    "babel-eslint": "10.0.3",
     "babel-plugin-add-module-exports": "1.0.2",
-    "eslint": "5.16.0",
-    "eslint-config-airbnb-base": "13.1.0",
-    "eslint-config-prettier": "4.3.0",
+    "eslint": "6.3.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "6.1.0",
     "eslint-import-resolver-babel-plugin-root-import": "1.1.1",
     "eslint-import-resolver-node": "0.3.2",
     "eslint-import-resolver-typescript": "1.1.1",
-    "eslint-plugin-import": "2.16.0",
+    "eslint-plugin-import": "2.18.2",
     "eslint-plugin-no-async-foreach": "0.1.1",
     "eslint-plugin-prettier": "3.1.0",
     "nodemon": "^1.19.1",
     "prettier": "1.18.2",
-    "prettier-eslint": "8.8.2",
-    "typescript": "3.5.1"
+    "prettier-eslint": "9.0.0",
+    "typescript": "3.6.2"
   }
 }
