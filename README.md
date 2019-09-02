@@ -3,7 +3,6 @@
 ### In progress
 
 - Force to type function retrun on front-end side
-- Add GraphQL Appolo client mutation
 
 ### Todo list
 

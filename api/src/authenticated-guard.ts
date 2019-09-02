@@ -3,10 +3,10 @@ import { Context } from './types';
 type Next = (root: any, args: any, context: Context, info: any) => any;
 
 export const authenticated = (next: Next): any => (
-  root: any,
-  args: any,
+  root: unknown,
+  args: unknown,
   context: Context,
-  info: any,
+  info: unknown,
 ): Next => {
   if (!context.currentUser) {
     throw new Error(`Unauthenticated User!`);

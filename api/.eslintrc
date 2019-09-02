@@ -23,7 +23,7 @@
     "plugins": ["import", "prettier"],
     "overrides": [
       {
-        "files": ["**/*.ts"],
+        "files": ["./src/**/*.ts"],
         "parser": "@typescript-eslint/parser",
         "parserOptions": {
           "project": "./tsconfig.json"

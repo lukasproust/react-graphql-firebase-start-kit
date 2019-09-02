@@ -23,7 +23,6 @@ const SnackbarContentWrapper: React.FC<Props> = ({
   variant,
   classes,
   closable,
-  ...other
 }) => {
   const Icon = variantIcon[variant];
 
@@ -49,7 +48,6 @@ const SnackbarContentWrapper: React.FC<Props> = ({
           </IconButton>,
         ]
       }
-      {...other}
     />
   );
 };

@@ -50,7 +50,6 @@ const Users: React.FC<
 
   const submitForm = (values: Values) => {
     if (userId) updateUser({ variables: { id: userId, ...values } });
-    // @ts-ignore ( email is already required by the input field )
     else
       createUser({ variables: { ...values } }).then(() =>
         history.push(ROUTES.USER_LIST),

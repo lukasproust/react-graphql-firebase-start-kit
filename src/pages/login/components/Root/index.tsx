@@ -1,6 +1,7 @@
-import React, { useState, useContext, Fragment } from 'react';
+import React, { useState, useContext } from 'react';
 import { IntlContext } from 'react-intl';
 import { Redirect } from 'react-router-dom';
+import classNames from 'classnames';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -14,12 +15,17 @@ import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ForwardIcon from '@material-ui/icons/Forward';
 
 import UserContext from 'shared/contexts/User';
-import useFormInput from 'shared/hooks/useFormInput';
+import useForm from 'shared/hooks/useForm';
 
 import { ROUTES as LOGIN_ROUTES } from 'pages/login/routes';
+import { ROUTES as USERS_ROUTES } from 'pages/users/routes';
 
+import loginValidate from './loginValidationRules';
+import { Values } from './types';
 import messages from './intl';
 import styles from './styles';
 
@@ -28,37 +34,39 @@ interface Props extends WithStyles<typeof styles> {
   history: { push: (config: { pathname: string }) => void };
 }
 
-const Login: React.FC<Props> = props => {
+const Login: React.FC<Props> = ({ location, history, classes }) => {
   const { formatMessage } = useContext(IntlContext);
   const user = useContext(UserContext);
-  const email = useFormInput('');
-  const password = useFormInput('');
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined,
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-  const { location, history, classes } = props;
-  console.log('loading', loading, 'errorMessage', errorMessage);
-  const login = () => {
+  const [loading, setLoading] = useState(false);
+  const [firebaseLoginError, setFirebaseLoginError] = useState<
+    string | undefined
+  >(undefined);
+
+  const submitForm = (values: Values) => {
     if (!user.signInWithEmailAndPassword) return;
 
-    setLoading(true);
     user
-      .signInWithEmailAndPassword(email.value, password.value)
+      .signInWithEmailAndPassword(values.email, values.password)
       .then(() => {
-        history.push({ pathname: '/users' });
+        history.push({ pathname: USERS_ROUTES.HOME });
       })
       .catch((error: { message: string }) => {
-        setErrorMessage(error.message);
+        setFirebaseLoginError(error.message);
         setLoading(false);
       });
   };
 
+  const { values, errors, handleChange, handleSubmit } = useForm<Values>(
+    { email: '', password: '', remenberMe: false }, // initial values
+    submitForm,
+    loginValidate,
+  );
+
   return (
     <div>
-      <Fragment>
+      <>
         {user && user.currentUser && (
-          <Redirect exact from={LOGIN_ROUTES.HOME} to="/users" />
+          <Redirect exact from={LOGIN_ROUTES.HOME} to={USERS_ROUTES.HOME} />
         )}
         {!user ||
           (!user.currentUser && location.pathname !== LOGIN_ROUTES.HOME && (
@@ -69,7 +77,7 @@ const Login: React.FC<Props> = props => {
               }}
             />
           ))}
-      </Fragment>
+      </>
       <Grid container className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -81,42 +89,62 @@ const Login: React.FC<Props> = props => {
             <Typography component="h1" variant="h5">
               {formatMessage(messages.signIn)}
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
                 id="email"
                 label={formatMessage(messages.emailLabel)}
                 name="email"
                 autoFocus
-                {...email} // value, onChange hook
+                error={errors.length > 0}
+                value={values.email}
+                onChange={handleChange}
               />
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
                 name="password"
                 label={formatMessage(messages.passwordlHint)}
                 type="password"
                 id="password"
-                {...password} // value, onChange hook
+                error={errors.length > 0}
+                value={values.password}
+                onChange={handleChange}
               />
               {/* TODO: Manage remember me function */}
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label={formatMessage(messages.remenberMe)}
               />
+              {(errors.length > 0 || firebaseLoginError) && (
+                <div className={classes.errorReporter}>
+                  {errors.map(error => (
+                    <span>{formatMessage(error)}</span>
+                  ))}
+                  <span>{firebaseLoginError}</span>
+                </div>
+              )}
               <Button
-                type="button"
+                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={login}
               >
+                {loading && (
+                  <CircularProgress
+                    className={classNames(
+                      classes.leftIcon,
+                      classes.buttonProgress,
+                    )}
+                    thickness={6}
+                    size={24}
+                  />
+                )}
+                {!loading && <ForwardIcon className={classes.leftIcon} />}
                 {formatMessage(messages.signInButton)}
               </Button>
               <Grid container>

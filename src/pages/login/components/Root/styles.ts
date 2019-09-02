@@ -20,7 +20,7 @@ const styles = ({ spacing, palette }: Theme) =>
     },
     avatar: {
       margin: spacing(1),
-      backgroundColor: palette.secondary.main,
+      backgroundColor: palette.primary.main,
     },
     form: {
       width: '100%', // Fix IE 11 issue.
@@ -28,6 +28,22 @@ const styles = ({ spacing, palette }: Theme) =>
     },
     submit: {
       margin: spacing(3, 0, 2),
+    },
+    leftIcon: {
+      marginRight: spacing(1),
+    },
+    buttonProgress: {
+      color: 'white',
+    },
+    errorReporter: {
+      display: 'block',
+      textAlign: 'center',
+      background: palette.error.main,
+      padding: '.5rem',
+      borderRadius: '.5rem',
+      color: palette.primary.contrastText,
+      fontWeight: 700,
+      marginTop: '1rem',
     },
   });
 

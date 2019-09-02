@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IntlProvider } from 'react-intl';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -59,7 +59,7 @@ const App: React.FC = () => {
   return (
     <ApolloProvider>
       <ThemeProvider theme={theme}>
-        <Fragment>
+        <>
           {translations && authReady && (
             <IntlProvider locale="en" messages={translations}>
               <UserContext.Provider value={user}>
@@ -68,7 +68,7 @@ const App: React.FC = () => {
             </IntlProvider>
           )}
           {!translations || (!authReady && <Loader />)}
-        </Fragment>
+        </>
       </ThemeProvider>
     </ApolloProvider>
   );
