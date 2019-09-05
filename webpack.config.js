@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const getClientEnvironment = require('./src/config/env');
 
@@ -18,7 +19,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+    publicPath: '',
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
@@ -75,5 +76,6 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
     }),
+    process.env.ANALYZE_BUNDLES === 'true' && new BundleAnalyzerPlugin(),
   ],
 };
