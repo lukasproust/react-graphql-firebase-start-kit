@@ -19,7 +19,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '',
+    publicPath: isProd ? '' : '/',
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
@@ -76,6 +76,8 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
     }),
-    process.env.ANALYZE_BUNDLES === 'true' && new BundleAnalyzerPlugin(),
+    ...(process.env.ANALYZE_BUNDLES === 'true'
+      ? [new BundleAnalyzerPlugin()]
+      : []),
   ],
 };
