@@ -2,7 +2,7 @@ import React, { memo, useContext } from 'react';
 import { IntlContext } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';

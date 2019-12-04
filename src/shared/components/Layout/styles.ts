@@ -1,4 +1,4 @@
-import { createStyles } from '@material-ui/styles';
+import { createStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 import { DRAWER_WIDTH } from './constants';

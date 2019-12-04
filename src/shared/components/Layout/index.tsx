@@ -1,6 +1,6 @@
 import React, { useState, memo } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Hidden from '@material-ui/core/Hidden';
 
 import Navigator from './Navigator';

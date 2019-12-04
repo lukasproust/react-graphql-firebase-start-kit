@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 import { variantIcon } from './constants';

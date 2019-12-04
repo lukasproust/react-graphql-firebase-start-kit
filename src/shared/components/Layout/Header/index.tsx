@@ -16,7 +16,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { withStyles, WithStyles } from '@material-ui/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import getActiveRoute from 'helpers/route/getActiveRoute';
 import getRouteWithParameters from 'helpers/route/getRouteWithParameters';

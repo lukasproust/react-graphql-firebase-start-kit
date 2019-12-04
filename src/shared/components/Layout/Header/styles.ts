@@ -1,4 +1,4 @@
-import { createStyles } from '@material-ui/styles';
+import { createStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';

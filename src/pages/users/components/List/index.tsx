@@ -2,7 +2,7 @@ import React, { useContext, memo } from 'react';
 import { IntlContext } from 'react-intl';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
-import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 

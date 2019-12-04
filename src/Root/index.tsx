@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IntlProvider } from 'react-intl';
-import { ThemeProvider } from '@material-ui/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import getUserLanguage from 'tools/intl/getUserLocale';
 import getStandardizedLocale from 'tools/intl/getStandardizedOrNearestLocale';

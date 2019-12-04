@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { IntlContext } from 'react-intl';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import withStyles, { WithStyles } from '@material-ui/styles/withStyles';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
