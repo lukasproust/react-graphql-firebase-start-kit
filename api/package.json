@@ -10,7 +10,7 @@
     "lint:ts": "eslint --ext ts --cache src"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase-admin": "^8.5.0",
     "graphql-tools": "^4.0.5",
     "graphql-yoga": "^1.18.3"
